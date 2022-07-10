@@ -19,7 +19,8 @@ function getVoice() {
     return goodVoice;
 }
 
-playWord.addEventListener('click', () => {
+playWord.addEventListener('mousedown', (e) => {
+    e.preventDefault();
     let msg = new SpeechSynthesisUtterance('');
     msg.lang = "en-US";
     msg.voice = getVoice();
