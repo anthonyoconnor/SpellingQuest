@@ -10,16 +10,27 @@ const targetWords = [
     'creature',
 ];
 
-const gameState = {};
+const levelState1 = {step: 1, guesses: 2, word: 'tomato', found: true};
+const levelState2 = {step: 2, guesses: 3, word: 'hero', found: true};
+const levelState3 = {step: 3, guesses: 1, word: 'sauce', found: true};
+
+const gameState = [levelState1,levelState2,levelState3];
+
+let currentLevel = 0;
 
 const FLIP_ANIMATION_DURATION = 500;
 const DANCE_ANIMATION_DURATION = 500;
 const keyboard = document.querySelector("[data-keyboard]");
 const alertContainer = document.querySelector("[data-alert-container]");
+const progressModal = document.querySelector("[data-progress]");
+const progressList = document.querySelector("[data-progress-list]");
 const guessGrid = document.querySelector("[data-guess-grid]");
-const playWord = document.querySelector("[data-play]");
+const playWordButton = document.querySelector("[data-play]");
+const playNext = document.querySelector("[data-next]");
 
 const synth = window.speechSynthesis;
+
+const NUM_OF_TRIES = 2;
 
 function getVoice() {
     // This list could be a settings option to allow the user to select the voice
@@ -29,14 +40,26 @@ function getVoice() {
     return goodVoice;
 }
 
-playWord.addEventListener('mousedown', (e) => {
+playWordButton.addEventListener('mousedown', (e) => {
     e.preventDefault();
+    playWord();
+});
+
+function playWord() {
     let msg = new SpeechSynthesisUtterance('');
     msg.lang = "en-US";
     msg.voice = getVoice();
     msg.text = targetWord;
 
     window.speechSynthesis.speak(msg);
+}
+
+playNext.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    currentLevel++;
+    console.log('level', currentLevel);
+    progressModal.classList.add("hide");
+    startNewWord();
 });
 
 let currentWordLength = 0;
@@ -44,6 +67,7 @@ let targetWord = '';
 
 
 function createInputGrid(numberOfTries, wordLength) {
+    guessGrid.textContent = '';
     totalNumberOfTiles = numberOfTries * wordLength;
 
     for (let index = 0; index < totalNumberOfTiles; index++) {
@@ -59,16 +83,17 @@ function setupAudio(audioSource) {
 }
 
 function startNewWord() {
-    const position = Math.floor(Math.random() * targetWords.length);
+    const position = currentLevel;
     targetWord = targetWords[position];
     currentWordLength = targetWord.length;
 
-    let numberOfTries = 4;
+    let numberOfTries = NUM_OF_TRIES;
     document.documentElement.style.setProperty("--rowNum", numberOfTries);
     document.documentElement.style.setProperty("--colNum", currentWordLength);
 
     createInputGrid(numberOfTries, currentWordLength);
     startInteraction();
+    playWord();
 }
 
 
@@ -221,15 +246,16 @@ function shakeTiles(tiles) {
 
 function checkWinLose(guess, tiles) {
     if (guess === targetWord) {
-        showAlert("You Win", 5000);
         danceTiles(tiles);
         stopInteraction();
+        setTimeout(() => showProgress(), 2000);
         return;
     }
 
     const remainingTiles = guessGrid.querySelectorAll(":not([data-letter])");
     if (remainingTiles.length === 0) {
         showFailedWord(targetWord.toUpperCase());
+        setTimeout(() => showProgress(), 2000);
         stopInteraction();
     }
 }
@@ -253,4 +279,25 @@ function showFailedWord() {
 
 }
 
+function showProgress() {
+    // <div class="step">1</div>
+    // <div class="scores">
+    //     <div class="icon" data-state='correct'></div>
+    //     <div class="icon" data-state='incorrect'></div>
+    //     <div class="icon"></div>
+    //     <div class="icon"></div>
+    // </div>
+    // <div class="answer-word">other</div>
+    progressList.textContent = '';
+    gameState.forEach(levelState => {
+        const element = document.createElement("div");
+        element.innerText = levelState.step;
+        progressList.appendChild(element);
+    });
+   
+    progressModal.classList.remove("hide");
+}
+
 startNewWord();
+
+// showProgress();
