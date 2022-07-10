@@ -1,5 +1,13 @@
 const targetWords = [
-    'unicorn'
+    'unicorn',
+    'fight',
+    'sword',
+    'backflip',
+    'parry',
+    'found',
+    'decided',
+    'adventure',
+    'creature',
 ]
 
 const FLIP_ANIMATION_DURATION = 500;
