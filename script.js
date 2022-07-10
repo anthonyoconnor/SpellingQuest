@@ -8,7 +8,9 @@ const targetWords = [
     'decided',
     'adventure',
     'creature',
-]
+];
+
+const gameState = {};
 
 const FLIP_ANIMATION_DURATION = 500;
 const DANCE_ANIMATION_DURATION = 500;
