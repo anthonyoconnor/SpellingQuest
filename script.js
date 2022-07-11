@@ -10,11 +10,7 @@ const targetWords = [
     'creature',
 ];
 
-const levelState1 = {step: 1, guesses: 2, word: 'tomato', found: true};
-const levelState2 = {step: 2, guesses: 3, word: 'hero', found: true};
-const levelState3 = {step: 3, guesses: 1, word: 'sauce', found: true};
 
-const gameState = [levelState1,levelState2,levelState3];
 
 let currentLevel = 0;
 
@@ -23,10 +19,14 @@ const DANCE_ANIMATION_DURATION = 500;
 const keyboard = document.querySelector("[data-keyboard]");
 const alertContainer = document.querySelector("[data-alert-container]");
 const progressModal = document.querySelector("[data-progress]");
+const progressModalHeader = document.querySelector("[data-progress-header]");
 const progressList = document.querySelector("[data-progress-list]");
 const guessGrid = document.querySelector("[data-guess-grid]");
 const playWordButton = document.querySelector("[data-play]");
 const playNext = document.querySelector("[data-next]");
+
+const WRONG = 'wrong';
+const CORRECT = 'correct';
 
 const synth = window.speechSynthesis;
 
@@ -99,9 +99,9 @@ function startNewWord() {
 
 function resetKeyboard() {
     Array.from(document.querySelectorAll('.key')).forEach((el) => {
-        el.classList.remove('wrong');
+        el.classList.remove(WRONG);
         el.classList.remove('wrong-location');
-        el.classList.remove('correct');
+        el.classList.remove(CORRECT);
     });
 }
 
@@ -196,14 +196,14 @@ function flipTile(tile, index, array, guess) {
         () => {
             tile.classList.remove("flip");
             if (targetWord[index] === letter) {
-                tile.dataset.state = "correct";
-                key.classList.add("correct");
+                tile.dataset.state = CORRECT;
+                key.classList.add(CORRECT);
             } else if (targetWord.includes(letter)) {
                 tile.dataset.state = "wrong-location";
                 key.classList.add("wrong-location");
             } else {
-                tile.dataset.state = "wrong";
-                key.classList.add("wrong");
+                tile.dataset.state = WRONG;
+                key.classList.add(WRONG);
             }
 
             if (index === array.length - 1) {
@@ -288,25 +288,61 @@ function showFailedWord() {
 
 }
 
+const levelState1 = { step: 1, guesses: [WRONG, CORRECT, null, null], word: 'tomato' };
+const levelState2 = { step: 2, guesses: [WRONG, WRONG, WRONG, WRONG], word: 'hero' };
+const levelState3 = { step: 3, guesses: [WRONG, WRONG, WRONG, CORRECT], word: 'sauce', currentLevel: true };
+const levelState4 = { step: 4, guesses: [null, null, null, null], word: null };
+const levelState5 = { step: 5, guesses: [null, null, null, null], word: null };
+
+const gameState = { name: "Fancy words", levels: [levelState1, levelState2, levelState3, levelState4, levelState5] };
+
+
 function showProgress() {
-    // <div class="step">1</div>
-    // <div class="scores">
-    //     <div class="icon" data-state='correct'></div>
-    //     <div class="icon" data-state='incorrect'></div>
-    //     <div class="icon"></div>
-    //     <div class="icon"></div>
-    // </div>
-    // <div class="answer-word">other</div>
+    progressModalHeader.innerText = gameState.name;
     progressList.textContent = '';
-    gameState.forEach(levelState => {
-        const element = document.createElement("div");
-        element.innerText = levelState.step;
-        progressList.appendChild(element);
+    gameState.levels.forEach(levelState => {
+
+        let addTo = progressList;
+        if(levelState.currentLevel) {
+            const wrapper = document.createElement("div");
+            wrapper.classList.add('progress-wrapper');
+            addTo = wrapper;
+            progressList.appendChild(wrapper);
+        }
+        //step
+        const elementStep = document.createElement("div");
+        elementStep.innerText = levelState.step;
+        elementStep.classList.add('step');
+        addTo.appendChild(elementStep);
+
+        //scores
+
+        const elementScore = document.createElement("div");
+        elementScore.classList.add('scores');
+        levelState.guesses.forEach(guess => {
+            const score = document.createElement("div");
+            score.classList.add('icon');
+            if (guess == CORRECT) {
+                score.dataset.state = CORRECT;
+            } else if (guess == WRONG) {
+                score.dataset.state = WRONG;
+            }
+
+            elementScore.appendChild(score);
+        });
+
+        addTo.appendChild(elementScore);
+
+        //answer word
+
+        const elementWord = document.createElement("div");
+        elementWord.classList.add('word');
+        elementWord.innerText = levelState.word;
+        addTo.appendChild(elementWord);
     });
-   
+
     progressModal.classList.remove("hide");
 }
 
 startNewWord();
-
-// showProgress();
+showProgress();

@@ -308,6 +308,24 @@ h1 {
   padding-bottom: 2em;
 }
 
+
+/* Step */
+.progress-list .step { 
+  margin: 1em;
+  font-size: 1.5em;
+}
+
+.progress-wrapper {
+  display: contents; 
+  border-style: solid;
+  border-color: coral;
+}
+
+.progress-wrapper > div {
+  background-color: skyblue;
+}
+
+/* Scores */
 .progress-list .scores {
   display: flex;
   flex-direction: row;
