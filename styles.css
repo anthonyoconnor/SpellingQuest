@@ -293,6 +293,10 @@ h1 {
 
 }
 
+.modal-progress-content h1 {
+  color: black;
+}
+
 .progress-list {
   display: grid;
   grid-template-columns: repeat(3, auto);
