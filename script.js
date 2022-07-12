@@ -175,14 +175,22 @@ function submitGuess() {
     }
 
     const guess = activeTiles.reduce((word, tile) => {
-        return word + tile.dataset.letter;
+        return word + tile.dataset.letter.toUpperCase();
     }, "");
 
     stopInteraction();
-    activeTiles.forEach((...params) => flipTile(...params, guess));
+
+    let correctRemoved = targetWord.split('');
+    for (let i = 0; i < targetWord.length; i++) {
+        if(guess[i] == targetWord[i]) {
+            correctRemoved[i] = ' ';
+        }
+    }
+
+    activeTiles.forEach((...params) => flipTile(...params, guess, correctRemoved));
 }
 
-function flipTile(tile, index, array, guess) {
+function flipTile(tile, index, array, guess, correctRemoved) {
     const letter = tile.dataset.letter.toUpperCase();
     const key = keyboard.querySelector(`[data-key="${letter}"i]`);
     setTimeout(() => {
@@ -193,10 +201,10 @@ function flipTile(tile, index, array, guess) {
         "transitionend",
         () => {
             tile.classList.remove("flip");
-            if (targetWord[index].toUpperCase() === letter) {
+            if (targetWord[index] === letter) {
                 tile.dataset.state = CORRECT;
                 key.classList.add(CORRECT);
-            } else if (targetWord.includes(letter)) {
+            } else if (correctRemoved.includes(letter)) {
                 tile.dataset.state = "wrong-location";
                 key.classList.add("wrong-location");
             } else {
@@ -252,7 +260,7 @@ function shakeTiles(tiles) {
 }
 
 function checkWinLose(guess, tiles) {
-    if (guess.toUpperCase() === targetWord.toUpperCase()) {
+    if (guess === targetWord) {
         danceTiles(tiles);
         stopInteraction();
         setTimeout(() => showProgress(), 2000);
@@ -261,7 +269,7 @@ function checkWinLose(guess, tiles) {
 
     const remainingTiles = guessGrid.querySelectorAll(":not([data-letter])");
     if (remainingTiles.length === 0) {
-        showFailedWord(targetWord.toUpperCase());
+        showFailedWord(targetWord);
         setTimeout(() => showProgress(), 2000);
         stopInteraction();
     }
