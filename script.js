@@ -1,16 +1,8 @@
-const targetWords = [
-    'unicorn',
-    'fight',
-    'sword',
-    'backflip',
-    'parry',
-    'found',
-    'decided',
-    'adventure',
-    'creature',
-];
 
 
+let quests = null;
+let questName = null;
+let targetWords = null;
 
 let currentLevel = 0;
 
@@ -25,12 +17,18 @@ const guessGrid = document.querySelector("[data-guess-grid]");
 const playWordButton = document.querySelector("[data-play]");
 const playNext = document.querySelector("[data-next]");
 
+const game = document.querySelector(".game");
+
+const questList = document.querySelector(".quest-list");
+
+
+
 const WRONG = 'wrong';
 const CORRECT = 'correct';
 
 const synth = window.speechSynthesis;
 
-const NUM_OF_TRIES = 2;
+const NUM_OF_TRIES = 4;
 
 function getVoice() {
     // This list could be a settings option to allow the user to select the voice
@@ -84,7 +82,7 @@ function setupAudio(audioSource) {
 
 function startNewWord() {
     const position = currentLevel;
-    targetWord = targetWords[position];
+    targetWord = targetWords[position].toUpperCase();
     currentWordLength = targetWord.length;
 
     let numberOfTries = NUM_OF_TRIES;
@@ -185,7 +183,7 @@ function submitGuess() {
 }
 
 function flipTile(tile, index, array, guess) {
-    const letter = tile.dataset.letter;
+    const letter = tile.dataset.letter.toUpperCase();
     const key = keyboard.querySelector(`[data-key="${letter}"i]`);
     setTimeout(() => {
         tile.classList.add("flip");
@@ -195,7 +193,7 @@ function flipTile(tile, index, array, guess) {
         "transitionend",
         () => {
             tile.classList.remove("flip");
-            if (targetWord[index] === letter) {
+            if (targetWord[index].toUpperCase() === letter) {
                 tile.dataset.state = CORRECT;
                 key.classList.add(CORRECT);
             } else if (targetWord.includes(letter)) {
@@ -254,7 +252,7 @@ function shakeTiles(tiles) {
 }
 
 function checkWinLose(guess, tiles) {
-    if (guess === targetWord) {
+    if (guess.toUpperCase() === targetWord.toUpperCase()) {
         danceTiles(tiles);
         stopInteraction();
         setTimeout(() => showProgress(), 2000);
@@ -293,8 +291,18 @@ const levelState2 = { step: 2, guesses: [WRONG, WRONG, WRONG, WRONG], word: 'her
 const levelState3 = { step: 3, guesses: [WRONG, WRONG, WRONG, CORRECT], word: 'sauce', currentLevel: true };
 const levelState4 = { step: 4, guesses: [null, null, null, null], word: null };
 const levelState5 = { step: 5, guesses: [null, null, null, null], word: null };
+const levelState6 = { step: 5, guesses: [null, null, null, null], word: null };
+const levelState7 = { step: 5, guesses: [null, null, null, null], word: null };
+const levelState8 = { step: 5, guesses: [null, null, null, null], word: null };
+const levelState9 = { step: 5, guesses: [null, null, null, null], word: null };
+const levelState10 = { step: 5, guesses: [null, null, null, null], word: null };
+const levelState11 = { step: 5, guesses: [null, null, null, null], word: null };
+const levelState12 = { step: 5, guesses: [null, null, null, null], word: null };
 
-const gameState = { name: "Fancy words", levels: [levelState1, levelState2, levelState3, levelState4, levelState5] };
+const gameState = {
+    name: "Fancy words", levels: [levelState1, levelState2, levelState3,
+        levelState4, levelState5, levelState6, levelState7, levelState8, levelState9, levelState10, levelState11, levelState12]
+};
 
 
 function showProgress() {
@@ -303,7 +311,7 @@ function showProgress() {
     gameState.levels.forEach(levelState => {
 
         let addTo = progressList;
-        if(levelState.currentLevel) {
+        if (levelState.currentLevel) {
             const wrapper = document.createElement("div");
             wrapper.classList.add('progress-wrapper');
             addTo = wrapper;
@@ -344,5 +352,81 @@ function showProgress() {
     progressModal.classList.remove("hide");
 }
 
-startNewWord();
-showProgress();
+//startNewWord();
+// showProgress();
+
+function showQuestList() {
+    game.classList.add('hide');
+    questList.classList.remove('hide');
+
+    load();
+}
+
+
+async function load() {
+
+
+    const response = await fetch("quests.json");
+    const fileContents = await response.json();
+    quests = fileContents.quests;
+
+    questList.textContent = '';
+    quests.forEach(quest => {
+
+        const item = document.createElement("div");
+        item.classList.add('quest-item');
+        item.dataset.title = quest.title;
+
+        const title = document.createElement("div");
+        title.classList.add('title');
+        title.innerText = quest.title;
+
+        item.append(title);
+
+        const icon = document.createElement("div");
+        icon.classList.add('icon');
+        icon.dataset.state = getQuestStatus(quest.title);
+
+        item.append(icon);
+
+        item.addEventListener("click", handleSelection);
+
+        questList.appendChild(item);
+    });
+
+}
+
+function handleSelection(e) {
+    e.preventDefault();
+    const questName = (e.target.getAttribute("data-title"));
+
+    startGame(questName)
+
+}
+
+
+function getQuestStatus(questName) {
+    let status = localStorage.getItem(questName.toLowerCase());
+
+    if (status == 'complete') {
+        return "complete";
+    }
+
+    return status ? "partial" : "unfinished";
+}
+
+
+
+
+function startGame(questName) {
+    questName = questName;
+    targetWords = quests.find(q => q.title == questName).words;
+
+    currentLevel = 0;
+    questList.classList.add('hide');
+    game.classList.remove('hide');
+    startNewWord();
+}
+
+
+showQuestList();
