@@ -70,7 +70,7 @@ function startNextWord() {
 
     currentLevel++;
 
-    if(currentLevel < targetWords.length) {
+    if (currentLevel < targetWords.length) {
         startNewWord();
     } else {
         showProgress();
@@ -107,7 +107,7 @@ function startNewWord() {
     document.documentElement.style.setProperty("--colNum", currentWordLength);
 
 
-    updateProgressTrail(targetWords.length, position+1);
+    updateProgressTrail(targetWords.length, position + 1);
 
     resetKeyboard();
     createInputGrid(numberOfTries, currentWordLength);
@@ -202,7 +202,7 @@ function submitGuess() {
 
     let correctRemoved = targetWord.split('');
     for (let i = 0; i < targetWord.length; i++) {
-        if(guess[i] == targetWord[i]) {
+        if (guess[i] == targetWord[i]) {
             correctRemoved[i] = ' ';
         }
     }
@@ -420,11 +420,22 @@ async function load() {
 
         item.append(title);
 
-        const icon = document.createElement("div");
-        icon.classList.add('icon');
-        icon.dataset.state = getQuestStatus(quest.title);
+        const achievements = document.createElement("div");
+        achievements.classList.add('achievements');
 
-        item.append(icon);
+        const stars = getQuestStars(quest.title);
+
+        for (let i = 1; i <= 3; i++) {
+            const icon = document.createElement("div");
+            icon.classList.add('icon');
+            if(i <= stars){
+                icon.dataset.state = 'complete';
+            }
+
+            achievements.append(icon);
+        }
+
+        item.append(achievements);
 
         item.addEventListener("click", handleSelection);
 
@@ -441,14 +452,29 @@ function handleSelection(e) {
 }
 
 
-function getQuestStatus(questName) {
+function getQuestStars(questName) {
     let status = localStorage.getItem(questName.toLowerCase());
 
     if (status == 'complete') {
-        return "complete";
+        return 3;
+    }
+    let stars = 0;
+    switch (status) {
+        case 'complete':
+            stars = 3;
+            break;
+        case 'partial':
+            stars = 2;
+            break;
+        case 'attempted':
+            stars = 1;
+            break;
+        default:
+            stars = 0;
+            break;
     }
 
-    return status ? "partial" : "unfinished";
+    return stars;
 }
 
 
@@ -476,7 +502,7 @@ function updateProgressTrail(total, current) {
         const item = document.createElement("div");
         item.classList.add('progress-icon');
         item.dataset.state = i < current ? 'complete' : 'incomplete';
-        if(current == i) {
+        if (current == i) {
             item.dataset.state = 'current';
         }
         progress.appendChild(item);
@@ -484,9 +510,4 @@ function updateProgressTrail(total, current) {
 }
 
 
-// make interface bigger 
-// use 3 stars for achievement. 
-// 3 empty stars for not attempted
-// 1 start for attempted
-// 2 stars for all correct but not first try
-// 3 stars for all correct first time.
+// make interface bigger
