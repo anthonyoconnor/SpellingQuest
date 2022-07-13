@@ -278,7 +278,7 @@ h1 {
   --lightness-offset: 10%;
 }
 
-.modal-progress {
+.modal {
   display: flex;
   position: absolute;
   width: 100%;
@@ -288,13 +288,11 @@ h1 {
   justify-content: center;
   align-items: center;
   z-index: 1;
+  background: rgba(128,128,128,0.7);
 }
 
-.modal-progress.hide {
-  display: none;
-}
 
-.modal-progress-content {
+.modal-content {
   position: relative;
   border-radius: 8px;
   border: 1px solid white;
@@ -312,7 +310,7 @@ h1 {
   box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.3);
 }
 
-.modal-progress-content h1 {
+.modal-content h1 {
   color: black;
 }
 
@@ -379,7 +377,7 @@ h1 {
 .quest-list {
   margin-top: 2em;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
   grid-gap: 20px;
   align-items: stretch;
 }
@@ -402,12 +400,12 @@ h1 {
 }
 
 .quest-item .title {
-  font-size: 1.5em;
+  font-size: 1em;
   pointer-events: none;
 }
 
 .quest-item .icon {
-  font-size: 8em;
+  font-size: 4em;
   pointer-events: none;
 }
 
@@ -440,3 +438,37 @@ h1 {
 .hide {
   display: none;
 }
+
+.modal-failed-word {
+  padding: 2em;
+}
+
+.modal-failed-word > button {
+  margin-top: 2em;
+}
+
+.progress-trail {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+  padding: 1em;
+}
+
+.progress-trail .progress-icon[data-state="complete"] {
+  background-color: gray;
+}
+
+.progress-trail .progress-icon[data-state="current"] {
+  background-color: black;
+  transform: scale(1.5);
+}
+
+
+.progress-trail .progress-icon {
+
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  border: 0.1em solid gray;
+}
+

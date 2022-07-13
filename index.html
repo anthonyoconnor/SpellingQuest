@@ -15,6 +15,9 @@
 
 	<div class="game hide">
 
+		<div class="progress-trail">
+		</div>
+
 		<div class="controls">
 			<button data-play class="action-button">Play Word</button>
 		</div>
@@ -66,13 +69,21 @@
 
 	</div>
 
-	<div data-progress class="modal-progress hide">
-		<div class="modal-progress-content">
+
+	<div data-failed-word-modal class="modal hide">
+		<div class="modal-content modal-failed-word">
+			<div data-failed-word class="guess-grid"></div>
+			<button data-next class="action-button">Next Word</button>
+		</div>
+	</div>
+
+	<div data-progress class="modal hide">
+		<div class="modal-content">
 			<h1 data-progress-header></h1>
 			<div data-progress-list class="progress-list">
 				<!-- progress is created dynamically -->
 			</div>
-			<button data-next class="action-button">Next Word</button>
+			<button data-new-quest class="action-button">New Quest</button>
 		</div>
 	</div>
 

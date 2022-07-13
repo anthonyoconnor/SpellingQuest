@@ -16,11 +16,13 @@ const progressList = document.querySelector("[data-progress-list]");
 const guessGrid = document.querySelector("[data-guess-grid]");
 const playWordButton = document.querySelector("[data-play]");
 const playNext = document.querySelector("[data-next]");
+const newQuestButton = document.querySelector("[data-new-quest]");
+
+const failedWordModal = document.querySelector("[data-failed-word-modal]");
 
 const game = document.querySelector(".game");
 
 const questList = document.querySelector(".quest-list");
-
 
 
 const WRONG = 'wrong';
@@ -54,11 +56,26 @@ function playWord() {
 
 playNext.addEventListener('mousedown', (e) => {
     e.preventDefault();
-    currentLevel++;
-    console.log('level', currentLevel);
-    progressModal.classList.add("hide");
-    startNewWord();
+    failedWordModal.classList.add("hide");
+    startNextWord();
 });
+
+newQuestButton.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    progressModal.classList.add("hide");
+    showQuestList();
+});
+
+function startNextWord() {
+
+    currentLevel++;
+
+    if(currentLevel < targetWords.length) {
+        startNewWord();
+    } else {
+        showProgress();
+    }
+}
 
 let currentWordLength = 0;
 let targetWord = '';
@@ -88,6 +105,9 @@ function startNewWord() {
     let numberOfTries = NUM_OF_TRIES;
     document.documentElement.style.setProperty("--rowNum", numberOfTries);
     document.documentElement.style.setProperty("--colNum", currentWordLength);
+
+
+    updateProgressTrail(targetWords.length, position+1);
 
     resetKeyboard();
     createInputGrid(numberOfTries, currentWordLength);
@@ -263,14 +283,14 @@ function checkWinLose(guess, tiles) {
     if (guess === targetWord) {
         danceTiles(tiles);
         stopInteraction();
-        setTimeout(() => showProgress(), 2000);
+        setTimeout(() => startNextWord(), 2000);
         return;
     }
 
     const remainingTiles = guessGrid.querySelectorAll(":not([data-letter])");
     if (remainingTiles.length === 0) {
-        showFailedWord(targetWord);
-        setTimeout(() => showProgress(), 2000);
+        shakeTiles(tiles);
+        setTimeout(() => showFailedWord(targetWord), 2000);
         stopInteraction();
     }
 }
@@ -290,9 +310,24 @@ function danceTiles(tiles) {
     });
 }
 
-function showFailedWord() {
 
+function showFailedWord(word) {
+    failedWordModal.classList.remove("hide");
+    const failedWordGrid = document.querySelector("[data-failed-word]");
+    failedWordGrid.innerHTML = '';
+    for (let i = 0; i < word.length; i++) {
+        const key = word[i];
+        const element = document.createElement("div");
+
+        element.dataset.letter = key.toLowerCase();
+        element.classList.add("tile");
+        element.textContent = key;
+        element.dataset.state = "active";
+
+        failedWordGrid.appendChild(element);
+    }
 }
+
 
 const levelState1 = { step: 1, guesses: [WRONG, CORRECT, null, null], word: 'tomato' };
 const levelState2 = { step: 2, guesses: [WRONG, WRONG, WRONG, WRONG], word: 'hero' };
@@ -311,7 +346,6 @@ const gameState = {
     name: "Fancy words", levels: [levelState1, levelState2, levelState3,
         levelState4, levelState5, levelState6, levelState7, levelState8, levelState9, levelState10, levelState11, levelState12]
 };
-
 
 function showProgress() {
     progressModalHeader.innerText = gameState.name;
@@ -360,9 +394,6 @@ function showProgress() {
     progressModal.classList.remove("hide");
 }
 
-//startNewWord();
-// showProgress();
-
 function showQuestList() {
     game.classList.add('hide');
     questList.classList.remove('hide');
@@ -372,8 +403,6 @@ function showQuestList() {
 
 
 async function load() {
-
-
     const response = await fetch("quests.json");
     const fileContents = await response.json();
     quests = fileContents.quests;
@@ -401,7 +430,6 @@ async function load() {
 
         questList.appendChild(item);
     });
-
 }
 
 function handleSelection(e) {
@@ -438,3 +466,27 @@ function startGame(questName) {
 
 
 showQuestList();
+
+
+function updateProgressTrail(total, current) {
+    const progress = document.querySelector(".progress-trail");
+    progress.innerHTML = '';
+
+    for (let i = 1; i <= total; i++) {
+        const item = document.createElement("div");
+        item.classList.add('progress-icon');
+        item.dataset.state = i < current ? 'complete' : 'incomplete';
+        if(current == i) {
+            item.dataset.state = 'current';
+        }
+        progress.appendChild(item);
+    }
+}
+
+
+// make interface bigger 
+// use 3 stars for achievement. 
+// 3 empty stars for not attempted
+// 1 start for attempted
+// 2 stars for all correct but not first try
+// 3 stars for all correct first time.
