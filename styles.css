@@ -106,7 +106,6 @@ h1 {
   display: grid;
   justify-content: center;
   align-content: center;
-  flex-grow: 1;
   grid-template-columns: repeat(var(--colNum), 4em);
   grid-template-rows: repeat(var(--rowNum), 4em);
   gap: .25em;
