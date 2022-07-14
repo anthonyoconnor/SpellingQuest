@@ -30,7 +30,7 @@ const CORRECT = 'correct';
 
 const synth = window.speechSynthesis;
 
-const NUM_OF_TRIES = 1;
+const NUM_OF_TRIES = 4;
 
 function getVoice() {
     // This list could be a settings option to allow the user to select the voice
@@ -74,8 +74,13 @@ function startNextWord() {
     if (currentLevel < targetWords.length) {
         startNewWord();
     } else {
-        showProgress();
+        const wordStatus = saveEndOfGameStatus
+        showSummary(questName, getWordStatus(questName));
     }
+}
+
+function saveEndOfGameStatus(questName) {
+    let status = localStorage.getItem(questName.toLowerCase());
 }
 
 let currentWordLength = 0;
@@ -281,7 +286,14 @@ function shakeTiles(tiles) {
 }
 
 function checkWinLose(guess, tiles) {
+    const triedTiles = guessGrid.querySelectorAll("[data-letter]");
+
     if (guess === targetWord) {
+        if(triedTiles.length == guess.length) {
+            updateWordStatus(questName, targetWord, 'complete');
+        } else {
+            updateWordStatus(questName, targetWord, 'partial');
+        }
         danceTiles(tiles);
         stopInteraction();
         setTimeout(() => startNextWord(), 2000);
@@ -290,6 +302,7 @@ function checkWinLose(guess, tiles) {
 
     const remainingTiles = guessGrid.querySelectorAll(":not([data-letter])");
     if (remainingTiles.length === 0) {
+        updateWordStatus(questName, targetWord, 'attempted');
         shakeTiles(tiles);
         setTimeout(() => showFailedWord(targetWord), 1500);
         stopInteraction();
@@ -329,17 +342,7 @@ function showFailedWord(word) {
     }
 }
 
-
-const levelState1 = { guesses: [WRONG, CORRECT, null, null], word: 'tomato' };
-const levelState2 = { guesses: [WRONG, WRONG, WRONG, WRONG], word: 'hero' };
-const levelState3 = { guesses: [WRONG, WRONG, WRONG, CORRECT], word: 'sauce' };
-
-
-const gameState = {
-    name: "Fancy words", levels: [levelState1, levelState2, levelState3, levelState2, levelState3]
-};
-
-function showProgress() {
+function showSummary(questName, wordStatus) {
 
     const progressModal = document.querySelector("[data-progress]");
     const progressModalHeader = document.querySelector("[data-progress-header]");
@@ -357,11 +360,12 @@ function showProgress() {
 
     progressModalHeader.innerText = questName;
     progressList.textContent = '';
-    gameState.levels.forEach(levelState => {
 
+    Object.entries(wordStatus).forEach(wordStatus => {
         const elementWord = document.createElement("div");
         elementWord.classList.add('word');
-        elementWord.innerText = levelState.word;
+        elementWord.innerText = wordStatus[0];
+        elementWord.dataset.status = wordStatus[1];
         progressList.appendChild(elementWord);
     });
 
@@ -436,36 +440,59 @@ function handleSelection(e) {
 
 
 function getQuestStars(questName) {
-    let status = localStorage.getItem(questName.toLowerCase());
+    const questStatus = getWordStatus(questName);
 
-    if (status == 'complete') {
+    if(!questStatus) {
+        return 0;
+    }
+
+    const wordStatuses = Object.entries(questStatus).map(x => x[1]);
+
+    const allComplete = wordStatuses.every(x => x == 'complete');
+    const someNotTried = wordStatuses.some(x => x == null);
+    const allNotTried = wordStatuses.every(x => x == null);
+    const someAttempted = wordStatuses.some(x => x == 'attempted');
+
+    if(allNotTried || someNotTried) {
+        return 0;
+    }
+
+    if(allComplete) {
         return 3;
-    }
-    let stars = 0;
-    switch (status) {
-        case 'complete':
-            stars = 3;
-            break;
-        case 'partial':
-            stars = 2;
-            break;
-        case 'attempted':
-            stars = 1;
-            break;
-        default:
-            stars = 0;
-            break;
+    } 
+
+    if(someAttempted) {
+        return 1;
     }
 
-    return stars;
+    return 2;
 }
 
+function getWordStatus(questName) {
+    const stored = localStorage.getItem(questName.toLowerCase());
+    return JSON.parse(stored);
+}
 
+function saveWordStatus(questName, wordStatus) {
+    localStorage.setItem(questName.toLowerCase(), JSON.stringify(wordStatus));
+}
+
+function updateWordStatus(questName, word, status) {
+    const wordStatus = getWordStatus(questName);
+    wordStatus[word.toLowerCase()] = status;
+    saveWordStatus(questName, wordStatus);
+}
 
 
 function startGame(newQuestName) {
     questName = newQuestName;
     targetWords = quests.find(q => q.title == questName).words;
+
+    const wordStatus = Object.assign({}, ...targetWords.map((x) => ({[x.toLowerCase()]: null})));
+
+    // If there is already a status for a quest, this will overwrite it.
+    // Might want to consider only doing this if their result is better?
+    saveWordStatus(questName, wordStatus);
 
     currentLevel = 0;
     questList.classList.add('hide');
@@ -474,7 +501,6 @@ function startGame(newQuestName) {
 }
 
 
-showQuestList();
 
 
 function updateProgressTrail(total, current) {
@@ -493,4 +519,6 @@ function updateProgressTrail(total, current) {
 }
 
 
-// make interface bigger
+
+
+showQuestList();

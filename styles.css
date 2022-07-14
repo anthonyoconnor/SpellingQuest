@@ -316,7 +316,7 @@ h1 {
 
 .modal-content h2 {
   color: black;
-  font-size: 2em;
+  font-size: 1.2em;
   padding: 0em;
   margin: 0 auto;
 }
@@ -332,16 +332,16 @@ h1 {
 .word-list .word {
   text-transform: uppercase;
   padding: 0.4em;
-  font-size: 1.5em;
+  font-size: 1em;
   font-weight: bold;
 }
 
-.word-list .word[data-state="success"] {
-  color: green;
+.word-list .word[data-status="complete"] {
+  color: hsl(115, 29%, 43%);
 }
 
-.word-list .word[data-state="partial"] {
-  color: yellow;
+.word-list .word[data-status="partial"] {
+  color: hsl(49, 51%, 47%);
 }
 
 
