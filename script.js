@@ -401,7 +401,7 @@ function showQuestList() {
 
 
 async function load() {
-    const response = await fetch("quests.json");
+    const response = await fetch("quests.json?v=1");
     const fileContents = await response.json();
     quests = fileContents.quests;
 

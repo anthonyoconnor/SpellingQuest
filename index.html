@@ -162,6 +162,23 @@
 		</div>
 
 	</div>
+	<script>
+		if ('serviceWorker' in navigator) {
+		  navigator.serviceWorker.register('/sw.js')
+			.then(function(reg) {
+			  if (reg.installing) {
+				console.log('SW installing');
+			  } else if (reg.waiting) {
+				console.log('SW waiting');
+			  } else if (reg.active) {
+				console.log('SW activated');
+			  }
+			}).catch(function(error) {
+			  // registration failed
+			  console.log('Registration failed with ' + error);
+			});
+		}
+	  </script>
 </body>
 
 </html>
