@@ -46,7 +46,8 @@ header {
 .help {
   font-size: 2em;
   cursor: pointer;
-  flex: 1
+  flex: 1;
+  margin: 0 0.5em;
 }
 
 .help {
