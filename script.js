@@ -17,8 +17,12 @@ const guessGrid = document.querySelector("[data-guess-grid]");
 const playWordButton = document.querySelector("[data-play]");
 const playNext = document.querySelector("[data-next]");
 const newQuestButton = document.querySelector("[data-new-quest]");
+const homeButton = document.querySelector(".home");
+const helpButton = document.querySelector(".help");
+const helpCloseButton = document.querySelector(".help-close");
 
 const failedWordModal = document.querySelector("[data-failed-word-modal]");
+const helpModal = document.querySelector("[data-help-modal]");
 
 const game = document.querySelector(".game");
 
@@ -66,6 +70,19 @@ newQuestButton.addEventListener('mousedown', (e) => {
     progressModal.classList.add("hide");
     showQuestList();
 });
+
+homeButton.addEventListener('mousedown', (e) => {
+    showQuestList()
+});
+
+helpButton.addEventListener('mousedown', (e) => {
+    helpModal.classList.remove("hide");
+});
+
+helpCloseButton.addEventListener('mousedown', (e) => {
+    helpModal.classList.add("hide");
+});
+
 
 function startNextWord() {
 

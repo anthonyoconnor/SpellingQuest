@@ -35,9 +35,70 @@ body {
   justify-content: space-between;
 }
 
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--text-color);
+}
+
+.home,
+.help {
+  font-size: 2em;
+  cursor: pointer;
+  flex: 1
+}
+
+.help {
+  text-align: right;
+}
+
+.help-close {
+  font-size: 2em;
+}
+
+.home:hover,
+.help:hover {
+  cursor: pointer;
+}
+
+.help-close {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  user-select: none;
+  cursor: pointer;
+}
+
+.help-content {
+  text-align: left;
+}
+
+.help-content .achievements .icon {
+  font-size: 2em;
+}
+
+.help-progress {
+  margin-top: 1em;
+  border-top: .05em solid var(--border-color);
+}
+
+.tile-explanation {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 0.5em;
+  gap: 1em;
+}
+
+.tile-explanation .tile {
+  width: 1em;
+}
+
 h1 {
   text-align: center;
-  border-bottom: 1px solid var(--text-color);
+
   margin: 0;
   padding-bottom: 0.25em;
   color: var(--text-color);
