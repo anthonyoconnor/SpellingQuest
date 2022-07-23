@@ -23,7 +23,6 @@ body {
   flex-direction: column;
   min-height: 100vh;
   margin: 0 auto;
-  padding: 1em;
   font-size: clamp(.5rem, 2.5vmin, 1.5rem);
   max-width: 1200px;
 }
