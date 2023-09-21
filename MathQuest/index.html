@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description"
+		content="Help kids learn to spell through play. Make learning spelling fun. Spelling words for all ages.">
+	<meta name="keywords"
+		content="Learn to spell, spelling test, spell, spelling, kindergarten, Grade 1, Grade 2, Grade 3, Grade 4, Grade 5, Grade 6, Grade 7, Spaced repetition, learning, spelling game, spelling challenge, fun">
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+		<link rel="manifest" href="/site.webmanifest">
+		<meta name="msapplication-TileColor" content="#da532c">
+		<meta name="theme-color" content="#ffffff">
+	<link rel="stylesheet" href="styles.css?v=1">
+	<script src="script.js?v=1" defer></script>
+	<title>Math Quest</title>
+</head>
+
+<body>
+	<header>
+		<div class="home">&#8962;</div>
+		<h1>Math Quest</h1>
+		<div class="help">?</div>
+	</header>
+
+
+	<div class="game hide">
+
+		<div class="progress-trail">
+		</div>
+
+		<div class="controls">
+			<button data-play class="action-button">Play Word</button>
+		</div>
+
+
+		<div class="alert-container" data-alert-container></div>
+		<div data-guess-grid class="guess-grid">
+			<!-- Grid is created dynamically -->
+		</div>
+
+		<div data-keyboard class="keyboard">
+			<button class="key" data-key="Q">Q</button>
+			<button class="key" data-key="W">W</button>
+			<button class="key" data-key="E">E</button>
+			<button class="key" data-key="R">R</button>
+			<button class="key" data-key="T">T</button>
+			<button class="key" data-key="Y">Y</button>
+			<button class="key" data-key="U">U</button>
+			<button class="key" data-key="I">I</button>
+			<button class="key" data-key="O">O</button>
+			<button class="key" data-key="P">P</button>
+			<div class="space"></div>
+			<button class="key" data-key="A">A</button>
+			<button class="key" data-key="S">S</button>
+			<button class="key" data-key="D">D</button>
+			<button class="key" data-key="F">F</button>
+			<button class="key" data-key="G">G</button>
+			<button class="key" data-key="H">H</button>
+			<button class="key" data-key="J">J</button>
+			<button class="key" data-key="K">K</button>
+			<button class="key" data-key="L">L</button>
+			<div class="space"></div>
+			<button data-enter class="key large">Enter</button>
+			<button class="key" data-key="Z">Z</button>
+			<button class="key" data-key="X">X</button>
+			<button class="key" data-key="C">C</button>
+			<button class="key" data-key="V">V</button>
+			<button class="key" data-key="B">B</button>
+			<button class="key" data-key="N">N</button>
+			<button class="key" data-key="M">M</button>
+			<button data-delete class="key large">
+				<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+					<path fill="var(--color-tone-1)"
+						d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z">
+					</path>
+				</svg>
+			</button>
+		</div>
+
+	</div>
+
+
+	<div data-failed-word-modal class="modal hide">
+		<div class="modal-content">
+			<div data-failed-word class="guess-grid"></div>
+			<button data-next class="action-button">Next Word</button>
+		</div>
+	</div>
+
+	<div data-progress class="modal hide">
+		<div class="modal-content">
+			<h2 data-progress-header></h2>
+			<div data-progress-results class="results">
+				<!-- Added dynamically -->
+			</div>
+			<button data-new-quest class="action-button">New Quest</button>
+		</div>
+	</div>
+
+
+	<div class="quest-list">
+	</div>
+
+	<div data-help-modal class="modal hide">
+		<div class="modal-content">
+			<h1>How to play</h1>
+			<div class="help-content">
+				<p>Each quest contains multiple related words. Try to correctly spell each word.</p>
+				<p>Use the play button to hear each word spoken. You have four attempts to spell each word. After the
+					forth attempt you will be shown the correct spelling and move on to the next word.</p>
+				<p>After each guess the color of the tiles will change to show you which letters were correct.</p>
+				<div>
+					<div class="tile-explanation">
+						<div class="tile" data-letter="d" data-state="correct">a</div>
+						<div>The letter is in the correct location in the word.</div>
+					</div>
+
+					<div class="tile-explanation">
+						<div class="tile" data-letter="d" data-state="wrong-location">a</div>
+						<div>The letter is in word but not in the correct location.</div>
+					</div>
+
+					<div class="tile-explanation">
+						<div class="tile" data-letter="d" data-state="wrong">a</div>
+						<div>The letter is not in the word.</div>
+					</div>
+				</div>
+				<div class="help-progress">
+					<h3>Track your overall progress by earning stars.</h3>
+					<div>
+						<div class="achievements">
+							<div class="icon" data-state="complete"></div>
+							<div class="icon"></div>
+							<div class="icon"></div>
+						</div>
+						<div>Good Attempt! You have tried all the words in this quest.</div>
+					</div>
+					<div>
+						<div class="achievements">
+							<div class="icon" data-state="complete"></div>
+							<div class="icon" data-state="complete"></div>
+							<div class="icon"></div>
+						</div>
+						<div>Keep it up! You got all the words in the quest correct within the four attempts.</div>
+					</div>
+					<div>
+						<div class="achievements">
+							<div class="icon" data-state="complete"></div>
+							<div class="icon" data-state="complete"></div>
+							<div class="icon" data-state="complete"></div>
+						</div>
+						<div>You did it! You got all the words correct on your first try. Try a new quest.</div>
+					</div>
+				</div>
+				<div  class="help-contact">
+					<p>
+						For inquiries or new word lists please contact me at <a href="mailto:anthonyoconnor@gmail.com?subject=Spelling Quest">anthonyoconnor@gmail.com</a>.
+					</p>
+				</div>
+			</div>
+			<div class="help-close">X</div>
+		</div>
+
+	</div>
+	<script>
+		if ('serviceWorker' in navigator) {
+		  navigator.serviceWorker.register('/sw.js')
+			.then(function(reg) {
+			  if (reg.installing) {
+				console.log('SW installing');
+			  } else if (reg.waiting) {
+				console.log('SW waiting');
+			  } else if (reg.active) {
+				console.log('SW activated');
+			  }
+			}).catch(function(error) {
+			  // registration failed
+			  console.log('Registration failed with ' + error);
+			});
+		}
+	  </script>
+</body>
+
+</html>
