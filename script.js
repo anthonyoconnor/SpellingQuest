@@ -1,7 +1,5 @@
 const targetWords = [
-    ['tomato', 'https://dictionary.cambridge.org/media/english/uk_pron/u/uke/ukele/ukelect016.mp3'],
-    ['chair', 'https://dictionary.cambridge.org/media/english/us_pron/u/usc/uscld/uscld01833.mp3'],
-    ['unicorn', 'https://dictionary.cambridge.org/media/english/us_pron/u/uni/unico/unicorn.mp3'],
+    'unicorn'
 ]
 
 const FLIP_ANIMATION_DURATION = 500;
@@ -11,8 +9,23 @@ const alertContainer = document.querySelector("[data-alert-container]");
 const guessGrid = document.querySelector("[data-guess-grid]");
 const playWord = document.querySelector("[data-play]");
 
+const synth = window.speechSynthesis;
+
+function getVoice() {
+    // This list could be a settings option to allow the user to select the voice
+    // they like.
+    let voices = synth.getVoices();
+    let goodVoice = voices.find(x => x.name.startsWith('Google US English'));
+    return goodVoice;
+}
+
 playWord.addEventListener('click', () => {
-    document.getElementById('word-audio').play();
+    let msg = new SpeechSynthesisUtterance('');
+    msg.lang = "en-US";
+    msg.voice = getVoice();
+    msg.text = targetWord;
+
+    window.speechSynthesis.speak(msg);
 });
 
 let currentWordLength = 0;
@@ -36,15 +49,12 @@ function setupAudio(audioSource) {
 
 function startNewWord() {
     const position = Math.floor(Math.random() * targetWords.length);
-    const wordInfo = targetWords[position];
-    targetWord = wordInfo[0];
+    targetWord = targetWords[position];
     currentWordLength = targetWord.length;
 
-    let numberOfTries = 2;
+    let numberOfTries = 4;
     document.documentElement.style.setProperty("--rowNum", numberOfTries);
     document.documentElement.style.setProperty("--colNum", currentWordLength);
-
-    setupAudio(wordInfo[1]);
 
     createInputGrid(numberOfTries, currentWordLength);
     startInteraction();
