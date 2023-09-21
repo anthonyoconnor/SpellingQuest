@@ -403,6 +403,11 @@ h1 {
   font-size: 1em;
   pointer-events: none;
 }
+.quest-item .achievements {
+  display: flex;
+  flex-direction: row;
+  pointer-events: none;
+}
 
 .quest-item .icon {
   font-size: 4em;
@@ -412,14 +417,8 @@ h1 {
 
 .quest-item .icon[data-state="complete"]:after {
   content: ' \2605';
-  color: hsl(115, 29%, 43%);
+  color: rgb(255,215,0)
 }
-
-.quest-item .icon[data-state="partial"]:after {
-  content: ' \2605';
-  color: hsl(49, 51%, 47%);
-}
-
 
 .quest-item .icon:after {
   content: ' \2606';
