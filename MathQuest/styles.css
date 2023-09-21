@@ -115,7 +115,7 @@ h1 {
 
 .keyboard {
   display: grid;
-  grid-template-columns: repeat(20, minmax(auto, 1.25em));
+  grid-template-columns: repeat(10, minmax(auto, 2em));
   grid-auto-rows: 3em;
   gap: .25em;
   justify-content: center;
@@ -496,4 +496,28 @@ h1 {
   height: 1em;
   border-radius: 50%;
   border: 0.1em solid gray;
+}
+
+.equation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.equation > div {
+  text-align: center;
+  margin: 5px;
+}
+
+.equation > input {
+    font-size: 2em;
+    color: var(--text-color);
+    border: .05em solid var(--border-color);
+    text-transform: uppercase;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    transition: transform 250ms linear;
 }
