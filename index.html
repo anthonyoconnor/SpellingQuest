@@ -5,15 +5,22 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="Help kids learn to spell through play. Make learning spelling fun. Spelling words for all ages.">
-	<meta name="keywords" content="Learn to spell, spelling test, spell, spelling, kindergarten, Grade 1, Grade 2, Grade 3, Grade 4, Grade 5, Grade 6, Grade 7, Spaced repetition, learning, spelling game, spelling challenge, fun">
+	<meta name="description"
+		content="Help kids learn to spell through play. Make learning spelling fun. Spelling words for all ages.">
+	<meta name="keywords"
+		content="Learn to spell, spelling test, spell, spelling, kindergarten, Grade 1, Grade 2, Grade 3, Grade 4, Grade 5, Grade 6, Grade 7, Spaced repetition, learning, spelling game, spelling challenge, fun">
 	<link rel="stylesheet" href="styles.css">
 	<script src="script.js" defer></script>
 	<title>Spelling Quest</title>
 </head>
 
 <body>
-	<h1>Spelling Quest</h1>
+	<header>
+		<div class="home">New Quest</div>
+		<h1>Spelling Quest</h1>
+		<div class="help">?</div>
+	</header>
+
 
 	<div class="game hide">
 
@@ -83,7 +90,7 @@
 		<div class="modal-content">
 			<h2 data-progress-header></h2>
 			<div data-progress-results class="results">
-			<!-- Added dynamically -->
+				<!-- Added dynamically -->
 			</div>
 			<button data-new-quest class="action-button">New Quest</button>
 		</div>
@@ -91,6 +98,63 @@
 
 
 	<div class="quest-list">
+	</div>
+
+	<div data-help-modal class="modal hide">
+		<div class="modal-content">
+			<h1>How to play</h1>
+			<div class="help-content">
+				<p>Each quest contains multiple related words. Try to correctly spell each word.</p>
+				<p>Use the play button to hear each word spoken. You have four attempts to spell each word. After the
+					forth attempt you will be shown the correct spelling and move on to the next word.</p>
+				<p>After each guess the color of the tiles will change to show you which letters were correct.</p>
+				<div>
+					<div class="tile-explanation">
+						<div class="tile" data-letter="d" data-state="correct">a</div>
+						<div>The letter is in the correct spot in the word.</div>
+					</div>
+
+					<div class="tile-explanation">
+						<div class="tile" data-letter="d" data-state="wrong-location">a</div>
+						<div>The letter is in the correct spot in the word.</div>
+					</div>
+
+					<div class="tile-explanation">
+						<div class="tile" data-letter="d" data-state="wrong">a</div>
+						<div>The letter is in the correct spot in the word.</div>
+					</div>
+				</div>
+				<div class="help-progress">
+					<h3>Track your overall progress by earning stars.</h3>
+					<div>
+						<div class="achievements">
+							<div class="icon" data-state="complete"></div>
+							<div class="icon"></div>
+							<div class="icon"></div>
+						</div>
+						<div>Good Attempt! You have tried all the words in this quest.</div>
+					</div>
+					<div>
+						<div class="achievements">
+							<div class="icon" data-state="complete"></div>
+							<div class="icon" data-state="complete"></div>
+							<div class="icon"></div>
+						</div>
+						<div>Keep it up! You got all the words in the quest correct within the four attempts.</div>
+					</div>
+					<div>
+						<div class="achievements">
+							<div class="icon" data-state="complete"></div>
+							<div class="icon" data-state="complete"></div>
+							<div class="icon" data-state="complete"></div>
+						</div>
+						<div>You did it! You got all the words correct on your first try. Try a new quest.</div>
+					</div>
+				</div>
+			</div>
+			<div class="help-close">X</div>
+		</div>
+
 	</div>
 </body>
 
