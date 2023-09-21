@@ -87,6 +87,11 @@ header {
   border-top: .05em solid var(--border-color);
 }
 
+.help-contact {
+  margin-top: 1em;
+  border-top: .05em solid var(--border-color);
+}
+
 .tile-explanation {
   display: flex;
   flex-direction: row;
@@ -361,7 +366,6 @@ h1 {
   border: 1px solid white;
   background-color: white;
   max-height: 100%;
-  overflow-y: auto;
   padding: 1em;
   display: flex;
   flex-direction: column;
