@@ -10,9 +10,9 @@ const FLIP_ANIMATION_DURATION = 500;
 const DANCE_ANIMATION_DURATION = 500;
 const keyboard = document.querySelector("[data-keyboard]");
 const alertContainer = document.querySelector("[data-alert-container]");
-const progressModal = document.querySelector("[data-progress]");
-const progressModalHeader = document.querySelector("[data-progress-header]");
-const progressList = document.querySelector("[data-progress-list]");
+
+
+
 const guessGrid = document.querySelector("[data-guess-grid]");
 const playWordButton = document.querySelector("[data-play]");
 const playNext = document.querySelector("[data-next]");
@@ -30,7 +30,7 @@ const CORRECT = 'correct';
 
 const synth = window.speechSynthesis;
 
-const NUM_OF_TRIES = 4;
+const NUM_OF_TRIES = 1;
 
 function getVoice() {
     // This list could be a settings option to allow the user to select the voice
@@ -62,6 +62,7 @@ playNext.addEventListener('mousedown', (e) => {
 
 newQuestButton.addEventListener('mousedown', (e) => {
     e.preventDefault();
+    const progressModal = document.querySelector("[data-progress]");
     progressModal.classList.add("hide");
     showQuestList();
 });
@@ -290,7 +291,7 @@ function checkWinLose(guess, tiles) {
     const remainingTiles = guessGrid.querySelectorAll(":not([data-letter])");
     if (remainingTiles.length === 0) {
         shakeTiles(tiles);
-        setTimeout(() => showFailedWord(targetWord), 2000);
+        setTimeout(() => showFailedWord(targetWord), 1500);
         stopInteraction();
     }
 }
@@ -329,67 +330,42 @@ function showFailedWord(word) {
 }
 
 
-const levelState1 = { step: 1, guesses: [WRONG, CORRECT, null, null], word: 'tomato' };
-const levelState2 = { step: 2, guesses: [WRONG, WRONG, WRONG, WRONG], word: 'hero' };
-const levelState3 = { step: 3, guesses: [WRONG, WRONG, WRONG, CORRECT], word: 'sauce', currentLevel: true };
-const levelState4 = { step: 4, guesses: [null, null, null, null], word: null };
-const levelState5 = { step: 5, guesses: [null, null, null, null], word: null };
-const levelState6 = { step: 5, guesses: [null, null, null, null], word: null };
-const levelState7 = { step: 5, guesses: [null, null, null, null], word: null };
-const levelState8 = { step: 5, guesses: [null, null, null, null], word: null };
-const levelState9 = { step: 5, guesses: [null, null, null, null], word: null };
-const levelState10 = { step: 5, guesses: [null, null, null, null], word: null };
-const levelState11 = { step: 5, guesses: [null, null, null, null], word: null };
-const levelState12 = { step: 5, guesses: [null, null, null, null], word: null };
+const levelState1 = { guesses: [WRONG, CORRECT, null, null], word: 'tomato' };
+const levelState2 = { guesses: [WRONG, WRONG, WRONG, WRONG], word: 'hero' };
+const levelState3 = { guesses: [WRONG, WRONG, WRONG, CORRECT], word: 'sauce' };
+
 
 const gameState = {
-    name: "Fancy words", levels: [levelState1, levelState2, levelState3,
-        levelState4, levelState5, levelState6, levelState7, levelState8, levelState9, levelState10, levelState11, levelState12]
+    name: "Fancy words", levels: [levelState1, levelState2, levelState3, levelState2, levelState3]
 };
 
 function showProgress() {
-    progressModalHeader.innerText = gameState.name;
+
+    const progressModal = document.querySelector("[data-progress]");
+    const progressModalHeader = document.querySelector("[data-progress-header]");
+
+    const results = document.querySelector("[ data-progress-results]");
+    results.innerHTML = '';
+
+    const stars = getQuestStars(questName);
+    const achievements = getAchievementDiv(stars);
+
+    results.append(achievements);
+
+    const progressList = document.createElement("div");
+    progressList.classList.add('word-list');
+
+    progressModalHeader.innerText = questName;
     progressList.textContent = '';
     gameState.levels.forEach(levelState => {
-
-        let addTo = progressList;
-        if (levelState.currentLevel) {
-            const wrapper = document.createElement("div");
-            wrapper.classList.add('progress-wrapper');
-            addTo = wrapper;
-            progressList.appendChild(wrapper);
-        }
-        //step
-        const elementStep = document.createElement("div");
-        elementStep.innerText = levelState.step;
-        elementStep.classList.add('step');
-        addTo.appendChild(elementStep);
-
-        //scores
-
-        const elementScore = document.createElement("div");
-        elementScore.classList.add('scores');
-        levelState.guesses.forEach(guess => {
-            const score = document.createElement("div");
-            score.classList.add('icon');
-            if (guess == CORRECT) {
-                score.dataset.state = CORRECT;
-            } else if (guess == WRONG) {
-                score.dataset.state = WRONG;
-            }
-
-            elementScore.appendChild(score);
-        });
-
-        addTo.appendChild(elementScore);
-
-        //answer word
 
         const elementWord = document.createElement("div");
         elementWord.classList.add('word');
         elementWord.innerText = levelState.word;
-        addTo.appendChild(elementWord);
+        progressList.appendChild(elementWord);
     });
+
+    results.append(progressList);
 
     progressModal.classList.remove("hide");
 }
@@ -420,20 +396,9 @@ async function load() {
 
         item.append(title);
 
-        const achievements = document.createElement("div");
-        achievements.classList.add('achievements');
-
         const stars = getQuestStars(quest.title);
 
-        for (let i = 1; i <= 3; i++) {
-            const icon = document.createElement("div");
-            icon.classList.add('icon');
-            if(i <= stars){
-                icon.dataset.state = 'complete';
-            }
-
-            achievements.append(icon);
-        }
+        const achievements = getAchievementDiv(stars);
 
         item.append(achievements);
 
@@ -441,6 +406,24 @@ async function load() {
 
         questList.appendChild(item);
     });
+}
+
+
+function getAchievementDiv(completedStars) {
+    const achievements = document.createElement("div");
+    achievements.classList.add('achievements');
+
+
+    for (let i = 1; i <= 3; i++) {
+        const icon = document.createElement("div");
+        icon.classList.add('icon');
+        if (i <= completedStars) {
+            icon.dataset.state = 'complete';
+        }
+
+        achievements.append(icon);
+    }
+    return achievements;
 }
 
 function handleSelection(e) {
@@ -480,8 +463,8 @@ function getQuestStars(questName) {
 
 
 
-function startGame(questName) {
-    questName = questName;
+function startGame(newQuestName) {
+    questName = newQuestName;
     targetWords = quests.find(q => q.title == questName).words;
 
     currentLevel = 0;
