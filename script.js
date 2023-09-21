@@ -91,9 +91,18 @@ function startNewWord() {
     document.documentElement.style.setProperty("--rowNum", numberOfTries);
     document.documentElement.style.setProperty("--colNum", currentWordLength);
 
+    resetKeyboard();
     createInputGrid(numberOfTries, currentWordLength);
     startInteraction();
     playWord();
+}
+
+function resetKeyboard() {
+    Array.from(document.querySelectorAll('.key')).forEach((el) => {
+        el.classList.remove('wrong');
+        el.classList.remove('wrong-location');
+        el.classList.remove('correct');
+    });
 }
 
 
