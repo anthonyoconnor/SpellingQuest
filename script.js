@@ -141,6 +141,7 @@ function stopInteraction() {
 }
 
 function handleMouseClick(e) {
+    e.preventDefault();
     if (e.target.matches("[data-key]")) {
         pressKey(e.target.dataset.key);
         return;
