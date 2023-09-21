@@ -273,6 +273,10 @@ h1 {
   z-index: 1;
 }
 
+.modal-progress.hide {
+  display: none;
+}
+
 .modal-progress-content {
   position: relative;
   border-radius: 8px;
