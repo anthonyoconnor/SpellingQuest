@@ -1,0 +1,63 @@
+{
+  "quests": [
+    {
+      "title": "Days of the Week",
+      "words": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ]
+    },
+    {
+      "title": "Months of the Year",
+      "words": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ]
+    },
+    {
+      "title": "Weather",
+      "words": [
+        "cloud",
+        "breeze",
+        "rain",
+        "snow",
+        "windy",
+        "hurricane",
+        "cold",
+        "hot",
+        "tornado",
+        "thunder"
+      ]
+    },
+    {
+      "title": "Animals",
+      "words": [
+        "bear",
+        "bird",
+        "chicken",
+        "elephant",
+        "fish",
+        "rabbit",
+        "tiger",
+        "whale",
+        "zebra",
+        "horse"
+      ]
+    }
+  ]
+}
