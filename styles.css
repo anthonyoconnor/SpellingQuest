@@ -50,6 +50,9 @@ header {
   margin: 0 0.5em;
 }
 
+.home {
+  font-size: 3em;
+}
 .help {
   text-align: right;
 }
