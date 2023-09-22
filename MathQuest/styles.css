@@ -5,6 +5,7 @@
   font-family: Arial;
 }
 
+
 :root {
   --rowNum: 5;
   --colNum: 6;
@@ -17,6 +18,23 @@
 }
 
 
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #3498db;
+  color: white;
+  padding: 20px;
+}
+
+.home-button {
+  text-decoration: none;
+  color: white;
+  font-size: 2em;
+    }
+
+
 body {
   background-color: var(--background-color);
   display: flex;
@@ -27,497 +45,29 @@ body {
   max-width: 1200px;
 }
 
-.game {
-  display: flex;
-  flex-direction: column;
-  min-height: 80vh;
-  justify-content: space-between;
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  border: 5px solid black;
+
 }
 
-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--text-color);
-}
-
-.home,
-.help {
-  font-size: 2em;
-  cursor: pointer;
-  flex: 1;
-  margin: 0 0.5em;
-}
-
-.home {
-  font-size: 3em;
-}
-.help {
-  text-align: right;
-}
-
-.help-close {
-  font-size: 2em;
-}
-
-.home:hover,
-.help:hover {
-  cursor: pointer;
-}
-
-.help-close {
-  position: absolute;
-  top: 1em;
-  right: 1em;
-  user-select: none;
-  cursor: pointer;
-}
-
-.help-content {
+td,
+th {
   text-align: left;
-}
-
-.help-content .achievements .icon {
-  font-size: 2em;
-}
-
-.help-progress {
-  margin-top: 1em;
-  border-top: .05em solid var(--border-color);
-}
-
-.help-contact {
-  margin-top: 1em;
-  border-top: .05em solid var(--border-color);
-}
-
-.tile-explanation {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 0.5em;
-  gap: 1em;
-}
-
-.tile-explanation .tile {
-  width: 1em;
-}
-
-h1 {
+  padding: 8px;
   text-align: center;
-
-  margin: 0;
-  padding-bottom: 0.25em;
-  color: var(--text-color);
-  font-size: 2.5em;
-}
-
-.keyboard {
-  display: grid;
-  grid-template-columns: repeat(10, minmax(auto, 2em));
-  grid-auto-rows: 3em;
-  gap: .25em;
-  justify-content: center;
-}
-
-.key {
-  font-size: inherit;
-  grid-column: span 2;
-  border: none;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: hsl(var(--hue, 200),
-      var(--saturation, 1%),
-      calc(var(--lightness-offset, 0%) + var(--lightness, 51%)));
-  color: white;
-  fill: white;
   text-transform: uppercase;
-  border-radius: .25em;
-  cursor: pointer;
-  user-select: none;
 }
 
-.key.large {
-  grid-column: span 3;
+tr:nth-child(even) {
+  background-color: #dddddd;
 }
 
-.key>svg {
-  width: 1.75em;
-  height: 1.75em;
-  pointer-events: none;
-}
-
-.key:hover,
-.key:focus {
-  --lightness-offset: 10%;
-}
-
-.key.wrong {
-  --lightness: 23%;
-}
-
-.key.wrong-location {
-  --hue: 49;
-  --saturation: 51%;
-  --lightness: 47%;
-}
-
-.key.correct {
-  --hue: 115;
-  --saturation: 29%;
-  --lightness: 43%;
-}
-
-.guess-grid {
-  display: grid;
-  justify-content: center;
-  align-content: center;
-  grid-template-columns: repeat(var(--colNum), 4em);
-  grid-template-rows: repeat(var(--rowNum), 4em);
-  gap: .25em;
-  margin-bottom: 1em;
-}
-
-.tile {
-  font-size: 2em;
-  color: var(--text-color);
-  border: .05em solid var(--border-color);
-  text-transform: uppercase;
-  font-weight: bold;
+.table-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  user-select: none;
-  transition: transform 250ms linear;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 10px 20px
 }
 
-.tile[data-state="active"] {
-  border-color: var(--active-border-color);
-}
-
-.tile[data-state="wrong"] {
-  border: none;
-  background-color: hsl(240, 2%, 23%);
-  color: var(--highlighted-text-color);
-}
-
-.tile[data-state="wrong-location"] {
-  border: none;
-  background-color: hsl(49, 51%, 47%);
-  color: var(--highlighted-text-color);
-}
-
-.tile[data-state="correct"] {
-  border: none;
-  background-color: hsl(115, 29%, 43%);
-  color: var(--highlighted-text-color);
-}
-
-.tile.shake {
-  animation: shake 250ms ease-in-out;
-}
-
-.tile.dance {
-  animation: dance 500ms ease-in-out;
-}
-
-.tile.flip {
-  transform: rotateX(90deg);
-}
-
-@keyframes shake {
-  10% {
-    transform: translateX(-5%);
-  }
-
-  30% {
-    transform: translateX(5%);
-  }
-
-  50% {
-    transform: translateX(-7.5%);
-  }
-
-  70% {
-    transform: translateX(7.5%);
-  }
-
-  90% {
-    transform: translateX(-5%);
-  }
-
-  100% {
-    transform: translateX(0);
-  }
-}
-
-@keyframes dance {
-  20% {
-    transform: translateY(-50%);
-  }
-
-  40% {
-    transform: translateY(5%);
-  }
-
-  60% {
-    transform: translateY(-25%);
-  }
-
-  80% {
-    transform: translateY(2.5%);
-  }
-
-  90% {
-    transform: translateY(-5%);
-  }
-
-  100% {
-    transform: translateY(0);
-  }
-}
-
-.alert-container {
-  position: fixed;
-  top: 10vh;
-  left: 50vw;
-  transform: translateX(-50%);
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.alert {
-  pointer-events: none;
-  background-color: hsl(204, 7%, 85%);
-  padding: .75em;
-  border-radius: .25em;
-  opacity: 1;
-  transition: opacity 500ms ease-in-out;
-  margin-bottom: .5em;
-}
-
-.alert:last-child {
-  margin-bottom: 0;
-}
-
-.alert.hide {
-  opacity: 0;
-}
-
-.controls {
-  display: grid;
-  justify-content: center;
-  align-content: center;
-  margin: 1em;
-}
-
-.action-button {
-  font-size: inherit;
-  border: none;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: red;
-  color: white;
-  fill: white;
-  text-transform: uppercase;
-  border-radius: .25em;
-  cursor: pointer;
-  user-select: none;
-  padding: 1em;
-
-  background-color: hsl(var(--hue, 200),
-      var(--saturation, 1%),
-      calc(var(--lightness-offset, 0%) + var(--lightness, 51%)));
-
-  --hue: 115;
-  --saturation: 29%;
-  --lightness: 43%;
-}
-
-.action-button:hover,
-.action-button :focus {
-  --lightness-offset: 10%;
-}
-
-.modal {
-  display: flex;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
-  background: rgba(128, 128, 128, 0.7);
-}
-
-
-.modal-content {
-  position: relative;
-  border-radius: 8px;
-  border: 1px solid white;
-  background-color: white;
-  max-height: 100%;
-  padding: 1em;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #ccc;
-  border-radius: 25px;
-  padding: 2em 4em;
-  box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.3);
-}
-
-.modal-content>button {
-  margin-top: 2em;
-}
-
-
-.modal-content h2 {
-  color: black;
-  font-size: 1.2em;
-  padding: 0em;
-  margin: 0 auto;
-}
-
-
-.modal-content .results {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1em;
-}
-
-.word-list .word {
-  text-transform: uppercase;
-  padding: 0.4em;
-  font-size: 1em;
-  font-weight: bold;
-}
-
-.word-list .word[data-status="complete"] {
-  color: hsl(115, 29%, 43%);
-}
-
-.word-list .word[data-status="partial"] {
-  color: hsl(49, 51%, 47%);
-}
-
-
-/* Selection Page */
-
-.quest-list {
-  margin-top: 2em;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  grid-gap: 20px;
-  align-items: stretch;
-}
-
-.quest-item {
-  border: 1px solid #ccc;
-  border-radius: 25px;
-  box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.3);
-  max-width: 100%;
-  padding: 1em;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.quest-item:hover {
-  transform: scale(1.05);
-  z-index: 1;
-  cursor: pointer;
-}
-
-.quest-item .title {
-  font-size: 1em;
-  pointer-events: none;
-}
-
-.achievements {
-  display: flex;
-  flex-direction: row;
-  pointer-events: none;
-}
-
-.achievements .icon {
-  font-size: 4em;
-  pointer-events: none;
-}
-
-
-.achievements .icon[data-state="complete"]:after {
-  content: ' \2605';
-  color: rgb(255, 215, 0)
-}
-
-.achievements .icon:after {
-  content: ' \2606';
-}
-
-
-.hide {
-  display: none;
-}
-
-
-
-.progress-trail {
-  display: flex;
-  justify-content: center;
-  gap: 1em;
-  padding: 1em;
-}
-
-.progress-trail .progress-icon[data-state="complete"] {
-  background-color: gray;
-}
-
-.progress-trail .progress-icon[data-state="current"] {
-  background-color: black;
-  transform: scale(1.5);
-}
-
-
-.progress-trail .progress-icon {
-
-  width: 1em;
-  height: 1em;
-  border-radius: 50%;
-  border: 0.1em solid gray;
-}
-
-.equation {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.equation > div {
-  text-align: center;
-  margin: 5px;
-}
-
-.equation > input {
-    font-size: 2em;
-    color: var(--text-color);
-    border: .05em solid var(--border-color);
-    text-transform: uppercase;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    user-select: none;
-    transition: transform 250ms linear;
-}
