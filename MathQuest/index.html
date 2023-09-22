@@ -3,18 +3,49 @@
 
 <head>
 	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description"
-		content="Help kids learn to spell through play. Make learning spelling fun. Spelling words for all ages.">
-	<meta name="keywords"
-		content="Learn to spell, spelling test, spell, spelling, kindergarten, Grade 1, Grade 2, Grade 3, Grade 4, Grade 5, Grade 6, Grade 7, Spaced repetition, learning, spelling game, spelling challenge, fun">
-		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-		<link rel="manifest" href="/site.webmanifest">
-		<meta name="msapplication-TileColor" content="#da532c">
-		<meta name="theme-color" content="#ffffff">
+	<style>
+		.button-container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-top: 50px;
+		}
+
+		.math-button {
+			margin: 20px;
+			padding: 15px 30px;
+			min-width: 350px;
+			font-size: 2em;
+			border: none;
+			border-radius: 10px;
+			cursor: pointer;
+			text-align: center;
+			transition: all .2s ease-in-out;
+			text-decoration: none;
+			color: white;
+		}
+
+		.addition {
+			background-color: #27ae60;
+		}
+
+		.subtraction {
+			background-color: #e74c3c;
+		}
+
+		.multiplication {
+			background-color: #f39c12;
+		}
+
+		.division {
+			background-color: #9b59b6;
+		}
+
+		.math-button:hover {
+			transform: scale(1.1);
+		}
+	</style>
 	<link rel="stylesheet" href="styles.css?v=1">
 	<script src="script.js?v=1" defer></script>
 	<title>Math Quest</title>
@@ -22,50 +53,23 @@
 
 <body>
 	<header>
-		<div class="home">&#8962;</div>
+		<a class="home-button" href="index.html">&#8962;</a>
 		<h1>Math Quest</h1>
 		<div class="help">?</div>
 	</header>
-
-
-	<div class="game">
-
-		<div class="equation">
-			<div>5</div>
-			<div>X</div>
-			<div>1</div>
-			<div>=</div>
-			<input type="number" id="answer">
+	<div id="main-menu">
+		<div class="button-container">
+			<a href="addition.html" class="math-button addition">Addition</a>
+			<a href="subtraction.html" class="math-button subtraction">Subtraction</a>
+			<a href="multiplication.html" class="math-button multiplication">Multiplication</a>
+			<a href="division.html" class="math-button division">Division</a>
 		</div>
+	</div>
+	<div style="display: none;">
+		<div id="table-container" class="table-container">
 
-		<div data-keyboard class="keyboard">
-			<button class="key" data-key="1">1</button>
-			<button class="key" data-key="2">2</button>
-			<button class="key" data-key="3">3</button>
-			<button class="key" data-key="4">4</button>
-			<button class="key" data-key="5">5</button>
-			<button class="key" data-key="6">6</button>
-			<button class="key" data-key="7">7</button>
-			<button class="key" data-key="8">8</button>
-			<button class="key" data-key="9">9</button>
-			<button class="key" data-key="0">0</button>
-
-			<button data-enter class="key large">Enter</button>
-			<div class="space"></div>
-			<div class="space"></div>
-			<div class="space"></div>
-			<div class="space"></div>
-			<button data-delete class="key large">
-				<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-					<path fill="var(--color-tone-1)"
-						d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z">
-					</path>
-				</svg>
-			</button>
 		</div>
-
 	</div>
 
 </body>
-
 </html>
