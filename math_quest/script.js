@@ -76,11 +76,10 @@ function createDivisionData() {
 
 
 
-async function loadAdditionTables() {
-    addition = fileContents.addition;
+async function loadAdditionTables(data, symbol) {
 
-    for (let index = 0; index < addition.length; index++) {
-        const table = createMathTable(numberNames[index + 1], "+", addition[index]);
+    for (let index = 0; index < data.length; index++) {
+        const table = createMathTable(numberNames[index + 1], symbol, data[index]);
         const div = document.createElement("div");
         div.classList.add('individual-table-container');
         div.appendChild(table);
@@ -91,9 +90,8 @@ async function loadAdditionTables() {
     }
 }
 
-async function loadSingleAdditionTable(index) {
-    addition = fileContents.addition;
-    const table = createMathTable(numberNames[index + 1], "+", addition[index]);
+async function loadSingleTable(data, name, symbol) {
+    const table = createMathTable(name, symbol, data);
 
     document.getElementById("single-table-container").appendChild(table);
 
@@ -224,13 +222,13 @@ function shuffleArray(originalArray) {
 
     return arrayCopy;
 }
-
-// loadAdditionTables();
-// loadSingleAdditionTable(11);
 let index = 11;
-let randomize = false;
-const data = randomize ? shuffleArray(additionData[index]) : additionData[index];
-loadInputTable(data, index, "+");
+//  loadAdditionTables(additionData, "+");
+ loadSingleTable(additionData[index], numberNames[index + 1], "+");
+
+// let randomize = false;
+// const data = randomize ? shuffleArray(additionData[index]) : additionData[index];
+// loadInputTable(data, index, "+");
 
 
 
