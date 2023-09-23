@@ -1,5 +1,79 @@
 const numberNames = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
-let fileContents = null;
+
+
+
+let additionData = createAdditionData();
+let multiplicationData = createMultiplicationData();
+let subtractionData = createSubtractionData();
+let divisionData = createDivisionData();
+
+// ------------------------------------
+// Create Math Tables
+// ------------------------------------
+function createAdditionData() {
+    let data = [];
+
+    for (let i = 1; i <= 12; i++) {
+        const array = [];
+        for (let j = 1; j <= 12; j++) {
+            const result = i + j;
+            array.push([i, j, result]);
+
+        }
+        data.push(array);
+    }
+
+    return data;
+}
+
+function createMultiplicationData() {
+    let data = [];
+
+    for (let i = 1; i <= 12; i++) {
+        const array = [];
+        for (let j = 1; j <= 12; j++) {
+            const result = i * j;
+            array.push([i, j, result]);
+
+        }
+        data.push(array);
+    }
+
+    return data;
+}
+
+function createSubtractionData() {
+    let data = [];
+
+    for (let i = 1; i <= 12; i++) {
+        const array = [];
+        for (let j = i; j < i + 12; j++) {
+            const result = j - i;
+            array.push([j, i, result]);
+        }
+        data.push(array);
+    }
+
+    return data;
+}
+
+function createDivisionData() {
+    let data = [];
+
+    for (let i = 1; i <= 12; i++) {
+        const array = [];
+        for (let j = 1; j <= 12; j++) {
+            const result = i * j;
+            array.push([result, i, j]);
+        }
+        data.push(array);
+    }
+
+    return data;
+}
+
+
+
 
 
 async function loadAdditionTables() {
@@ -25,11 +99,39 @@ async function loadSingleAdditionTable(index) {
 
 }
 
-async function loadInputAdditionTable(index, randomize) {
-    addition = fileContents.addition;
-    const data = randomize ? shuffleArray(addition[index]) : addition[index];
-    const table = createMathTableWithInput(numberNames[index + 1], "+", data);
+function loadInputTable(data, index, symbol) {
+
+    const table = createMathTableWithInput(numberNames[index + 1], symbol, data);
     document.getElementById("single-table-container").appendChild(table);
+    // Enable first input and set focus 
+    const firstInput = table.querySelector("input");
+    firstInput.disabled = false;
+    firstInput.focus();
+    // only show buttons for the current choice.
+    const buttons = table.querySelectorAll("button");
+    for (const button of buttons) {
+        button.style.display = "none";
+    }
+    const firstButton = table.querySelector("button.check");
+    firstButton.style.display = "inline-block";
+    const helpButton = table.querySelector("button.help");
+    helpButton.style.display = "inline-block";
+
+    //when check button is clicked check if the input value matches the data-key value
+    firstButton.addEventListener("click", (_) => {
+        const input = firstInput.value;
+        const key = firstButton.getAttribute("data-key");
+        if (input === key) {
+            firstInput.classList.add("correct");
+        } else {
+            firstInput.classList.add("incorrect");
+        }
+        firstInput.disabled = true;
+        firstButton.style.display = "none";
+        helpButton.style.display = "none";
+    },
+        { once: true }
+    );
 }
 
 function createMathTableWithInput(name, symbol, data) {
@@ -75,7 +177,7 @@ function addInput(result, row) {
     const input = document.createElement("input");
     input.classList.add("guess");
     input.type = "tel";
-    input.value = result;
+    //input.value = result;
     const td = document.createElement("td");
 
     td.appendChild(input);
@@ -125,13 +227,10 @@ function shuffleArray(originalArray) {
 
 // loadAdditionTables();
 // loadSingleAdditionTable(11);
+let index = 11;
+let randomize = false;
+const data = randomize ? shuffleArray(additionData[index]) : additionData[index];
+loadInputTable(data, index, "+");
 
 
-async function loadData() {
-    const response = await fetch("math.json?v=1");
-    fileContents = await response.json();
-    loadInputAdditionTable(11, false);
-}
-
-loadData();
 
