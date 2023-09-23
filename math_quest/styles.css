@@ -45,25 +45,25 @@ body {
   max-width: 1200px;
 }
 
+
 table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
   border: 5px solid black;
-  width: 25%;
   background-color: #FFFFFF;
+  margin: 0 auto;
+  font-size: 2em;
 }
 
-table:hover {
+/* table:hover {
   cursor: pointer;
   transform: scale(1.1);
-}
+} */
 
 td,
 th {
-  text-align: left;
   padding: 8px;
   text-align: center;
   text-transform: uppercase;
+  vertical-align: middle;
 }
 
 th {
@@ -81,7 +81,12 @@ tr:nth-child(even) {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  gap: 10px 20px
+  gap: 60px 40px
+}
+
+.individual-table-container {
+  width: 25%;
+  margin: 0 auto;
 }
 
 .instructions {
@@ -89,3 +94,74 @@ tr:nth-child(even) {
   padding: 20px;
 }
 
+/* Buttons */
+
+.vertical-button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+  
+}
+
+.horizontal-button-container {
+  display: flex;
+  margin-top: 50px;
+  justify-content: center;
+}
+
+.math-button {
+  margin: 20px;
+  padding: 15px 30px;
+  min-width: 350px;
+  font-size: 2em;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: all .2s ease-in-out;
+  text-decoration: none;
+  color: white;
+}
+
+.addition {
+  background-color: #27ae60;
+}
+
+.subtraction {
+  background-color: #e74c3c;
+}
+
+.multiplication {
+  background-color: #f39c12;
+}
+
+.division {
+  background-color: #9b59b6;
+}
+
+.practice {
+  background-color: #ddcc1b;
+}
+
+.quiz {
+  background-color: #17d11d;
+}
+
+.math-button:hover {
+  transform: scale(1.1);
+}
+
+.guess {
+  vertical-align: middle;
+  height: 2em;
+  width: 3em;
+}
+
+button.check {
+  vertical-align: middle;
+}
+
+button.help {
+  vertical-align: middle;
+}
