@@ -177,3 +177,13 @@ button.help {
 .hide {
   display: none;
 }
+
+.results {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 20px;
+  border: 2px solid rgb(125, 125, 125);
+  border-radius: 20px;
+}

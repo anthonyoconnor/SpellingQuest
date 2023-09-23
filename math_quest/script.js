@@ -135,41 +135,87 @@ function loadSingleTable(data, name, symbol) {
     single.appendChild(table);
 }
 
+let currentInputIndex = -1;
+
 function loadInputTable(data, index, symbol) {
 
     const table = createMathTableWithInput(numberNames[index + 1], symbol, data);
     const single = document.getElementById("single-table-container");
     single.innerHTML = "";
     single.appendChild(table);
-    // Enable first input and set focus 
-    const firstInput = table.querySelector("input");
-    firstInput.disabled = false;
-    firstInput.focus();
-    // only show buttons for the current choice.
-    const buttons = table.querySelectorAll("button");
-    for (const button of buttons) {
-        button.style.display = "none";
-    }
-    const firstButton = table.querySelector("button.check");
-    firstButton.style.display = "inline-block";
-    const helpButton = table.querySelector("button.help");
-    helpButton.style.display = "inline-block";
 
-    //when check button is clicked check if the input value matches the data-key value
-    firstButton.addEventListener("click", (_) => {
-        const input = firstInput.value;
-        const key = firstButton.getAttribute("data-key");
-        if (input === key) {
-            firstInput.classList.add("correct");
-        } else {
-            firstInput.classList.add("incorrect");
-        }
-        firstInput.disabled = true;
-        firstButton.style.display = "none";
-        helpButton.style.display = "none";
-    },
-        { once: true }
-    );
+    currentInputIndex = -1;
+    console.log(data.length);
+    goToNextRow(data.length);  
+}
+
+function disableRowInputs(index) {
+    const input = document.getElementById(`input-${index}`);
+    input.disabled = true;
+
+    const checkTd = document.getElementById(`check-${index}`);
+    checkTd.innerHTML = "";
+
+    const answerTd = document.getElementById(`answer-${index}`);
+    answerTd.innerHTML = "";
+}
+
+function goToNextRow(maxRows) {
+    currentInputIndex++;
+    // if the current index is greater than 0
+    // then disable the input in the previous indexed row
+    // remove the check button from the previous indexed row
+    // remove the answer button from the previous indexed row
+    if (currentInputIndex > 0) {
+       disableRowInputs(currentInputIndex - 1);
+    }
+
+
+    if (currentInputIndex < maxRows) {
+        const input = document.getElementById(`input-${currentInputIndex}`);
+        input.disabled = false;
+
+        const checkButton = document.createElement("button");
+        checkButton.classList.add("check");
+        checkButton.innerHTML = "Check";
+        const checkTd = document.getElementById(`check-${currentInputIndex}`);
+        checkTd.appendChild(checkButton);
+
+        const answerButton = document.createElement("button");
+        answerButton.classList.add("answer");
+        answerButton.innerHTML = "Answer";
+        const answerTd = document.getElementById(`answer-${currentInputIndex}`);
+        answerTd.appendChild(answerButton);
+
+        input.focus();
+
+        checkButton.addEventListener("click", (e) => {
+            const input = document.getElementById(`input-${currentInputIndex}`);
+            const key = input.getAttribute("data-key");
+            if (input.value == key) {
+                input.style.backgroundColor = "green";
+                goToNextRow(maxRows);
+            } else {
+                input.style.backgroundColor = "red";
+            }
+            e.preventDefault();
+        });
+
+        answerButton.addEventListener("click", (e) => {
+            const input = document.getElementById(`input-${currentInputIndex}`);
+            const key = input.getAttribute("data-key");
+            input.value = key;
+            input.style.backgroundColor = "yellow";
+            goToNextRow(maxRows);
+            e.preventDefault();
+        });
+    } else {
+            //when current index is equal to the number of rows
+        //show the users score
+
+        const result = document.getElementById("result");
+        result.innerHTML = "You got 5 correct";
+    }
 }
 
 function createMathTableWithInput(name, symbol, data) {
@@ -181,19 +227,25 @@ function createMathTableWithInput(name, symbol, data) {
     table.appendChild(thead);
 
     // Table body
+    let index = 0;
     const tbody = document.createElement("tbody");
     for (const [first, second, result] of data) {
         const row = document.createElement("tr");
+
+        //give unique id to each row
+        row.id = `row-${index}`;
 
         addBasicTd(first, row);
         addBasicTd(symbol, row);
         addBasicTd(second, row);
         addBasicTd("=", row);
-        addInput(result, row);
-        addButton(result, "check", "Check", row);
-        addButton(result, "help", "?", row);
+        addInput(result, row, index);
+        addEmptyTd(`check-${index}`, row);
+        addEmptyTd(`answer-${index}`, row);
 
         tbody.appendChild(row);
+
+        index++;
     }
     table.appendChild(tbody);
 
@@ -211,11 +263,13 @@ function addButton(result, cssClass, label, row) {
     row.appendChild(td);
 }
 
-function addInput(result, row) {
+function addInput(result, row, index) {
     const input = document.createElement("input");
     input.classList.add("guess");
+    input.id = `input-${index}`;
     input.type = "tel";
-    //input.value = result;
+    input.disabled = true;
+    input.setAttribute("data-key", result);
     const td = document.createElement("td");
 
     td.appendChild(input);
@@ -225,6 +279,12 @@ function addInput(result, row) {
 function addBasicTd(symbol, row) {
     const td = document.createElement("td");
     td.innerHTML = symbol;
+    row.appendChild(td);
+}
+
+function addEmptyTd(id, row) {
+    const td = document.createElement("td");
+    td.id = id;
     row.appendChild(td);
 }
 
