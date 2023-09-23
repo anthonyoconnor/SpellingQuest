@@ -13,32 +13,24 @@ const practiceButton = document.getElementById("practice");
 const quizButton = document.getElementById("quiz");
 
 showAllButton.addEventListener("click", (e) => {
-    resetEnabledButtons();
     displayInitialView();
     e.preventDefault();
 });
 
 practiceButton.addEventListener("click", (e) => {
-    loadInputTable(additionData[currentIndex], currentIndex, "+");
-    resetEnabledButtons();
+    loadInputTable(additionData[currentIndex], currentIndex, "+", false);
     practiceButton.classList.add("enabled");
     e.preventDefault();
 });
 
 quizButton.addEventListener("click", (e) => {
     const data = shuffleArray(additionData[currentIndex]);
-    loadInputTable(data, currentIndex, "+");
-    resetEnabledButtons();
+    loadInputTable(data, currentIndex, "+", true);
     quizButton.classList.add("enabled");
     e.preventDefault();
 });
 
-function resetEnabledButtons() {
-    const buttons = document.querySelectorAll("a");
-    for (const button of buttons) {
-        button.classList.remove("enabled");
-    }
-}
+
 
 
 
@@ -137,43 +129,44 @@ function loadSingleTable(data, name, symbol) {
 
 let currentInputIndex = -1;
 
-function loadInputTable(data, index, symbol) {
+function loadInputTable(data, index, symbol, quiz = false) {
 
-    const table = createMathTableWithInput(numberNames[index + 1], symbol, data);
+    const table = createMathTableWithInput(numberNames[index + 1], symbol, data, !quiz);
     const single = document.getElementById("single-table-container");
     single.innerHTML = "";
     single.appendChild(table);
 
     currentInputIndex = -1;
-    console.log(data.length);
-    goToNextRow(data.length);  
+    goToNextRow(data.length, quiz);  
 }
 
-function disableRowInputs(index) {
+function disableRowInputs(index, quiz) {
     const input = document.getElementById(`input-${index}`);
     input.disabled = true;
 
     const checkTd = document.getElementById(`check-${index}`);
     checkTd.innerHTML = "";
 
-    const answerTd = document.getElementById(`answer-${index}`);
-    answerTd.innerHTML = "";
+    if(!quiz) {
+        const answerTd = document.getElementById(`answer-${index}`);
+        answerTd.innerHTML = "";
+    }
 }
 
-function goToNextRow(maxRows) {
+function goToNextRow(maxRows, quiz = false) {
     currentInputIndex++;
     // if the current index is greater than 0
     // then disable the input in the previous indexed row
     // remove the check button from the previous indexed row
     // remove the answer button from the previous indexed row
     if (currentInputIndex > 0) {
-       disableRowInputs(currentInputIndex - 1);
+       disableRowInputs(currentInputIndex - 1, quiz);
     }
-
 
     if (currentInputIndex < maxRows) {
         const input = document.getElementById(`input-${currentInputIndex}`);
         input.disabled = false;
+        input.focus();
 
         const checkButton = document.createElement("button");
         checkButton.classList.add("check");
@@ -181,49 +174,51 @@ function goToNextRow(maxRows) {
         const checkTd = document.getElementById(`check-${currentInputIndex}`);
         checkTd.appendChild(checkButton);
 
-        const answerButton = document.createElement("button");
-        answerButton.classList.add("answer");
-        answerButton.innerHTML = "Answer";
-        const answerTd = document.getElementById(`answer-${currentInputIndex}`);
-        answerTd.appendChild(answerButton);
-
-        input.focus();
-
         checkButton.addEventListener("click", (e) => {
             const input = document.getElementById(`input-${currentInputIndex}`);
             const key = input.getAttribute("data-key");
             if (input.value == key) {
                 input.style.backgroundColor = "green";
-                goToNextRow(maxRows);
+                goToNextRow(maxRows, quiz);
             } else {
                 input.style.backgroundColor = "red";
+                if(quiz) {
+                    goToNextRow(maxRows, quiz);
+                }
             }
             e.preventDefault();
         });
 
-        answerButton.addEventListener("click", (e) => {
-            const input = document.getElementById(`input-${currentInputIndex}`);
-            const key = input.getAttribute("data-key");
-            input.value = key;
-            input.style.backgroundColor = "yellow";
-            goToNextRow(maxRows);
-            e.preventDefault();
-        });
-    } else {
-            //when current index is equal to the number of rows
-        //show the users score
+        if(!quiz) {
+            const answerButton = document.createElement("button");
+            answerButton.classList.add("answer");
+            answerButton.innerHTML = "Answer";
+            const answerTd = document.getElementById(`answer-${currentInputIndex}`);
+            answerTd.appendChild(answerButton);
 
+            answerButton.addEventListener("click", (e) => {
+                const input = document.getElementById(`input-${currentInputIndex}`);
+                const key = input.getAttribute("data-key");
+                input.value = key;
+                input.style.backgroundColor = "yellow";
+                goToNextRow(maxRows, quiz);
+                e.preventDefault();
+            });
+        }
+
+    } else {
         const result = document.getElementById("result");
         result.innerHTML = "You got 5 correct";
     }
 }
 
-function createMathTableWithInput(name, symbol, data) {
+function createMathTableWithInput(name, symbol, data, includeAnswerButton) {
     const table = document.createElement("table");
 
     // Table header
     const thead = document.createElement("thead");
-    thead.innerHTML = `<tr><th colspan="7">${name}</th></tr>`;
+    const colSpan = includeAnswerButton ? 7 : 6;
+    thead.innerHTML = `<tr><th colspan="${colSpan}">${name}</th></tr>`;
     table.appendChild(thead);
 
     // Table body
@@ -241,8 +236,9 @@ function createMathTableWithInput(name, symbol, data) {
         addBasicTd("=", row);
         addInput(result, row, index);
         addEmptyTd(`check-${index}`, row);
-        addEmptyTd(`answer-${index}`, row);
-
+        if(includeAnswerButton){
+            addEmptyTd(`answer-${index}`, row);
+        }
         tbody.appendChild(row);
 
         index++;
