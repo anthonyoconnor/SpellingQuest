@@ -47,9 +47,11 @@ body {
 
 
 table {
-  border: 5px solid black;
+  border: 2px solid rgb(125, 125, 125);
   background-color: #FFFFFF;
   margin: 0 auto;
+  border-collapse: collapse;
+  font-weight: bold;
 }
 
 table:hover {
@@ -73,7 +75,7 @@ th {
 }
 
 tr:nth-child(even) {
-  background-color: #d3d3d3;
+  background-color: #ebebeb;
 }
 
 .table-container {
