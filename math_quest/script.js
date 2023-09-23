@@ -1,5 +1,16 @@
 const numberNames = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
 
+let currentView = "all";
+
+const allTables = document.getElementById("allTables");
+const singleTable = document.getElementById("singleTable");
+const showAllButton = document.getElementById("showAll");
+const practiceButton = document.getElementById("practice");
+const testButton = document.getElementById("test");
+
+showAllButton.addEventListener("click", (_) => {
+    displayInitialView();
+});
 
 
 let additionData = createAdditionData();
@@ -72,29 +83,31 @@ function createDivisionData() {
     return data;
 }
 
+function loadAllTables(data, symbol) {
 
-
-
-
-async function loadAdditionTables(data, symbol) {
-
+    const allTables = document.getElementById("table-container");
+    allTables.innerHTML = "";
     for (let index = 0; index < data.length; index++) {
         const table = createMathTable(numberNames[index + 1], symbol, data[index]);
         const div = document.createElement("div");
         div.classList.add('individual-table-container');
         div.appendChild(table);
         div.addEventListener("click", (_) => {
-            console.log("index clicked: " + index)
+            console.log(index)
+            displaySingleView(index);
+            // scroll to top
+            window.scrollTo(0, 0);
         })
-        document.getElementById("table-container").appendChild(div);
+        allTables.appendChild(div);
     }
 }
 
-async function loadSingleTable(data, name, symbol) {
+function loadSingleTable(data, name, symbol) {
     const table = createMathTable(name, symbol, data);
 
-    document.getElementById("single-table-container").appendChild(table);
-
+    const single = document.getElementById("single-table-container");
+    single.innerHTML = "";
+    single.appendChild(table);
 }
 
 function loadInputTable(data, index, symbol) {
@@ -223,12 +236,23 @@ function shuffleArray(originalArray) {
     return arrayCopy;
 }
 let index = 11;
-//  loadAdditionTables(additionData, "+");
- loadSingleTable(additionData[index], numberNames[index + 1], "+");
+// 
+ 
 
 // let randomize = false;
 // const data = randomize ? shuffleArray(additionData[index]) : additionData[index];
 // loadInputTable(data, index, "+");
+function displayInitialView() {
+    loadAllTables(additionData, "+");
+    allTables.classList.remove("hide");
+    singleTable.classList.add("hide");
+}
 
+function displaySingleView(index) {
+    loadSingleTable(additionData[index], numberNames[index + 1], "+");
+    allTables.classList.add("hide");
+    singleTable.classList.remove("hide");
+}
 
+displayInitialView();
 
