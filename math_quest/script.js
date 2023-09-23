@@ -1,22 +1,48 @@
 const numberNames = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
 
-let currentView = "all";
+let currentIndex = -1;
+let additionData = createAdditionData();
+let multiplicationData = createMultiplicationData();
+let subtractionData = createSubtractionData();
+let divisionData = createDivisionData();
 
 const allTables = document.getElementById("allTables");
 const singleTable = document.getElementById("singleTable");
 const showAllButton = document.getElementById("showAll");
 const practiceButton = document.getElementById("practice");
-const testButton = document.getElementById("test");
+const quizButton = document.getElementById("quiz");
 
-showAllButton.addEventListener("click", (_) => {
+showAllButton.addEventListener("click", (e) => {
+    resetEnabledButtons();
     displayInitialView();
+    e.preventDefault();
 });
 
+practiceButton.addEventListener("click", (e) => {
+    loadInputTable(additionData[currentIndex], currentIndex, "+");
+    resetEnabledButtons();
+    practiceButton.classList.add("enabled");
+    e.preventDefault();
+});
 
-let additionData = createAdditionData();
-let multiplicationData = createMultiplicationData();
-let subtractionData = createSubtractionData();
-let divisionData = createDivisionData();
+quizButton.addEventListener("click", (e) => {
+    const data = shuffleArray(additionData[currentIndex]);
+    loadInputTable(data, currentIndex, "+");
+    resetEnabledButtons();
+    quizButton.classList.add("enabled");
+    e.preventDefault();
+});
+
+function resetEnabledButtons() {
+    const buttons = document.querySelectorAll("a");
+    for (const button of buttons) {
+        button.classList.remove("enabled");
+    }
+}
+
+
+
+
 
 // ------------------------------------
 // Create Math Tables
@@ -93,9 +119,8 @@ function loadAllTables(data, symbol) {
         div.classList.add('individual-table-container');
         div.appendChild(table);
         div.addEventListener("click", (_) => {
-            console.log(index)
+            currentIndex = index;
             displaySingleView(index);
-            // scroll to top
             window.scrollTo(0, 0);
         })
         allTables.appendChild(div);
@@ -113,7 +138,9 @@ function loadSingleTable(data, name, symbol) {
 function loadInputTable(data, index, symbol) {
 
     const table = createMathTableWithInput(numberNames[index + 1], symbol, data);
-    document.getElementById("single-table-container").appendChild(table);
+    const single = document.getElementById("single-table-container");
+    single.innerHTML = "";
+    single.appendChild(table);
     // Enable first input and set focus 
     const firstInput = table.querySelector("input");
     firstInput.disabled = false;
@@ -235,13 +262,7 @@ function shuffleArray(originalArray) {
 
     return arrayCopy;
 }
-let index = 11;
-// 
- 
 
-// let randomize = false;
-// const data = randomize ? shuffleArray(additionData[index]) : additionData[index];
-// loadInputTable(data, index, "+");
 function displayInitialView() {
     loadAllTables(additionData, "+");
     allTables.classList.remove("hide");
@@ -253,6 +274,7 @@ function displaySingleView(index) {
     allTables.classList.add("hide");
     singleTable.classList.remove("hide");
 }
+
 
 displayInitialView();
 

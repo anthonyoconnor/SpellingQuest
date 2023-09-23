@@ -146,6 +146,9 @@ tr:nth-child(even) {
 .practice {
   background-color: #ddcc1b;
 }
+.enabled {
+  transform: scale(1.4);
+}
 
 .quiz {
   background-color: #17d11d;
