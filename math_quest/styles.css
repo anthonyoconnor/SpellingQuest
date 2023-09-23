@@ -54,7 +54,7 @@ table {
 
 table:hover {
   cursor: pointer;
-  transform: scale(1.1);
+  /* transform: scale(1.1); */
 }
 
 td,
@@ -84,7 +84,6 @@ tr:nth-child(even) {
 }
 
 .individual-table-container {
-  width: 20%;
   margin: 0 auto;
 }
 
@@ -106,6 +105,7 @@ tr:nth-child(even) {
 .horizontal-button-container {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 20px;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -146,9 +146,9 @@ tr:nth-child(even) {
 .practice {
   background-color: #ddcc1b;
 }
-.enabled {
+/* .enabled {
   transform: scale(1.4);
-}
+} */
 
 .quiz {
   background-color: #17d11d;
