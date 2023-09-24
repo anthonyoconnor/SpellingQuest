@@ -6,6 +6,9 @@ let multiplicationData = createMultiplicationData();
 let subtractionData = createSubtractionData();
 let divisionData = createDivisionData();
 
+let currentData = additionData;
+let currentSymbol = "+";
+
 const allTables = document.getElementById("allTables");
 const singleTable = document.getElementById("singleTable");
 const showAllButton = document.getElementById("showAll");
@@ -13,27 +16,22 @@ const practiceButton = document.getElementById("practice");
 const quizButton = document.getElementById("quiz");
 
 showAllButton.addEventListener("click", (e) => {
-    displayInitialView();
+    displayInitialView(currentData, currentSymbol);
     e.preventDefault();
 });
 
 practiceButton.addEventListener("click", (e) => {
-    loadInputTable(additionData[currentIndex], currentIndex, "+", false);
+    loadInputTable(currentData[currentIndex], currentIndex, currentSymbol, false);
     practiceButton.classList.add("enabled");
     e.preventDefault();
 });
 
 quizButton.addEventListener("click", (e) => {
-    const data = shuffleArray(additionData[currentIndex]);
-    loadInputTable(data, currentIndex, "+", true);
+    const data = shuffleArray(currentData[currentIndex]);
+    loadInputTable(data, currentIndex, currentSymbol, true);
     quizButton.classList.add("enabled");
     e.preventDefault();
 });
-
-
-
-
-
 
 
 // ------------------------------------
@@ -112,7 +110,7 @@ function loadAllTables(data, symbol) {
         div.appendChild(table);
         div.addEventListener("click", (_) => {
             currentIndex = index;
-            displaySingleView(index);
+            displaySingleView(index, data, symbol);
             window.scrollTo(0, 0);
         })
         allTables.appendChild(div);
@@ -137,7 +135,7 @@ function loadInputTable(data, index, symbol, quiz = false) {
     single.appendChild(table);
 
     currentInputIndex = -1;
-    goToNextRow(data.length, quiz);  
+    goToNextRow(data.length, quiz);
 }
 
 function disableRowInputs(index, quiz) {
@@ -147,7 +145,7 @@ function disableRowInputs(index, quiz) {
     const checkTd = document.getElementById(`check-${index}`);
     checkTd.innerHTML = "";
 
-    if(!quiz) {
+    if (!quiz) {
         const answerTd = document.getElementById(`answer-${index}`);
         answerTd.innerHTML = "";
     }
@@ -160,13 +158,19 @@ function goToNextRow(maxRows, quiz = false) {
     // remove the check button from the previous indexed row
     // remove the answer button from the previous indexed row
     if (currentInputIndex > 0) {
-       disableRowInputs(currentInputIndex - 1, quiz);
+        disableRowInputs(currentInputIndex - 1, quiz);
     }
 
     if (currentInputIndex < maxRows) {
         const input = document.getElementById(`input-${currentInputIndex}`);
         input.disabled = false;
         input.focus();
+
+        input.addEventListener("keyup", (e) => {
+            if (e.key === 'Enter') {
+                checkAnswer();
+            }
+        });
 
         const checkButton = document.createElement("button");
         checkButton.classList.add("check");
@@ -175,21 +179,11 @@ function goToNextRow(maxRows, quiz = false) {
         checkTd.appendChild(checkButton);
 
         checkButton.addEventListener("click", (e) => {
-            const input = document.getElementById(`input-${currentInputIndex}`);
-            const key = input.getAttribute("data-key");
-            if (input.value == key) {
-                input.style.backgroundColor = "green";
-                goToNextRow(maxRows, quiz);
-            } else {
-                input.style.backgroundColor = "red";
-                if(quiz) {
-                    goToNextRow(maxRows, quiz);
-                }
-            }
+            checkAnswer();
             e.preventDefault();
         });
 
-        if(!quiz) {
+        if (!quiz) {
             const answerButton = document.createElement("button");
             answerButton.classList.add("answer");
             answerButton.innerHTML = "Answer";
@@ -208,7 +202,27 @@ function goToNextRow(maxRows, quiz = false) {
 
     } else {
         const result = document.getElementById("result");
-        result.innerHTML = "You got 5 correct";
+        result.innerHTML = "TODO: Show results";
+        
+        window.scrollTo(0, 0);
+    }
+
+    function checkAnswer() {
+        const input = document.getElementById(`input-${currentInputIndex}`);
+        const key = input.getAttribute("data-key");
+        if (input.value == key) {
+            input.style.backgroundColor = "green";
+            goToNextRow(maxRows, quiz);
+        } else if (input.value == "") {
+            input.focus();
+        } else {
+            input.style.backgroundColor = "red";
+            if (quiz) {
+                goToNextRow(maxRows, quiz);
+            } else {
+                input.focus();
+            }
+        }
     }
 }
 
@@ -236,7 +250,7 @@ function createMathTableWithInput(name, symbol, data, includeAnswerButton) {
         addBasicTd("=", row);
         addInput(result, row, index);
         addEmptyTd(`check-${index}`, row);
-        if(includeAnswerButton){
+        if (includeAnswerButton) {
             addEmptyTd(`answer-${index}`, row);
         }
         tbody.appendChild(row);
@@ -319,18 +333,65 @@ function shuffleArray(originalArray) {
     return arrayCopy;
 }
 
-function displayInitialView() {
-    loadAllTables(additionData, "+");
+function displayInitialView(data, symbol) {
+    loadAllTables(data, symbol);
     allTables.classList.remove("hide");
     singleTable.classList.add("hide");
 }
 
-function displaySingleView(index) {
-    loadSingleTable(additionData[index], numberNames[index + 1], "+");
+function displaySingleView(index, data, symbol) {
+    loadSingleTable(data[index], numberNames[index + 1], symbol);
     allTables.classList.add("hide");
     singleTable.classList.remove("hide");
 }
 
+function setTitle(text) {
+    const title = document.getElementById("title");
+    title.innerHTML = text;
+}
 
-displayInitialView();
+function getType() {
+    // get data type based on the query string parameter 'type'
+    const urlParams = new URLSearchParams(window.location.search);
+    const type = urlParams.get('type');
+    return type;
+}
+
+// switch case based on getType()
+function setup() {
+    const type = getType();
+    switch (type) {
+        case "multiplication":
+            multiplicationData = createMultiplicationData();
+            currentData = multiplicationData;
+            currentSymbol = "x";
+            setTitle("Multiplication");
+            displayInitialView(multiplicationData, currentSymbol);
+            break;
+        case "subtraction":
+            subtractionData = createSubtractionData();
+            currentData = subtractionData;
+            currentSymbol = "-";
+            setTitle("Subtraction");
+            displayInitialView(subtractionData, currentSymbol);
+            break;
+        case "division":
+            divisionData = createDivisionData();
+            currentData = divisionData;
+            currentSymbol = "/";
+            displayInitialView(divisionData, currentSymbol);
+            setTitle("Division");
+            break;
+        default: // default to addition
+            additionData = createAdditionData();
+            currentData = additionData;
+            currentSymbol = "+";
+            displayInitialView(additionData, currentSymbol);
+            setTitle("Addition");
+            break;
+
+    }
+}
+
+setup();
 
