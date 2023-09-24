@@ -177,6 +177,7 @@ tr:nth-child(even) {
   width: 3em;
 }
 
+button.answer,
 button.check {
   vertical-align: middle;
 }
@@ -186,7 +187,7 @@ button.help {
 }
 
 .hide {
-  display: none;
+  display: none !important;
 }
 
 .results {
@@ -197,6 +198,11 @@ button.help {
   margin: 20px;
   border: 2px solid rgb(125, 125, 125);
   border-radius: 20px;
+  background-color: aliceblue;
+}
+
+.result {
+  margin: 20px;
 }
 
 input:disabled {

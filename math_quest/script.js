@@ -14,6 +14,23 @@ const singleTable = document.getElementById("singleTable");
 const showAllButton = document.getElementById("showAll");
 const practiceButton = document.getElementById("practice");
 const quizButton = document.getElementById("quiz");
+// data structure to trrack how many results were correct
+let currentResults = {
+    correct: 0,
+    incorrect: 0,
+    skipped: 0
+};
+
+
+function resetCurrentResults() {
+    removeResultNotice();
+    currentResults = {
+        correct: 0,
+        incorrect: 0,
+        skipped: 0,
+        firstTime: true
+    };
+}
 
 showAllButton.addEventListener("click", (e) => {
     displayInitialView(currentData, currentSymbol);
@@ -23,6 +40,7 @@ showAllButton.addEventListener("click", (e) => {
 practiceButton.addEventListener("click", (e) => {
     loadInputTable(currentData[currentIndex], currentIndex, currentSymbol, false);
     practiceButton.classList.add("enabled");
+    resetCurrentResults();
     e.preventDefault();
 });
 
@@ -30,6 +48,7 @@ quizButton.addEventListener("click", (e) => {
     const data = shuffleArray(currentData[currentIndex]);
     loadInputTable(data, currentIndex, currentSymbol, true);
     quizButton.classList.add("enabled");
+    resetCurrentResults();
     e.preventDefault();
 });
 
@@ -118,6 +137,7 @@ function loadAllTables(data, symbol) {
 }
 
 function loadSingleTable(data, name, symbol) {
+    removeResultNotice();
     const table = createMathTable(name, symbol, data);
 
     const single = document.getElementById("single-table-container");
@@ -192,15 +212,15 @@ function goToNextRow(maxRows, quiz = false) {
                 const key = input.getAttribute("data-key");
                 input.value = key;
                 input.style.backgroundColor = "orange";
+                currentResults.skipped++;
                 goToNextRow(maxRows, quiz);
                 e.preventDefault();
             });
         }
 
     } else {
-        const result = document.getElementById("result");
-        result.innerHTML = "TODO: Show results";
-        
+        showResultNotice(quiz);
+
         window.scrollTo(0, 0);
     }
 
@@ -209,18 +229,61 @@ function goToNextRow(maxRows, quiz = false) {
         const key = input.getAttribute("data-key");
         if (input.value == key) {
             input.style.backgroundColor = "green";
+            //update results
+            currentResults.correct++;
+
             goToNextRow(maxRows, quiz);
         } else if (input.value == "") {
             input.focus();
         } else {
             input.style.backgroundColor = "red";
             if (quiz) {
+                currentResults.incorrect++;
                 goToNextRow(maxRows, quiz);
             } else {
+                currentResults.firstTime = false;
                 input.focus();
             }
         }
     }
+}
+
+function removeResultNotice() {
+    const results = document.getElementById("results");
+    results.classList.add("hide");
+    const result = document.getElementById("result");
+    result.innerHTML = "";
+}
+
+function showResultNotice(quiz) {
+    const results = document.getElementById("results");
+    results.classList.remove("hide");
+    const result = document.getElementById("result");
+
+    let message = "";
+
+    if (quiz) {
+        if (currentResults.incorrect == 0) {
+            message = `You got them all right! Well done.`;
+        }
+        else if (currentResults.correct == 0) {
+            message = `You got them all wrong this time! Try some more practice.`;
+        } else {
+            message = `You got ${currentResults.correct} correct, and ${currentResults.incorrect} incorrect. Try some more practice.`;
+        }
+    } else {
+        if (currentResults.firstTime && currentResults.skipped == 0) {
+            message = "You got them all right on the first try! Well done. Try a Quiz.";
+        } else if (!currentResults.firstTime && currentResults.skipped == 0) {
+            message = `You got them all with a few tries. Try getting them all first time.`;
+        } else if (currentResults.correct == 0) {
+            message = `You had to look up the answer to all of them. Try spending some time reading the table out loud first.`;
+        } else {
+            message = `You got ${currentResults.correct} correct, and ${currentResults.skipped} skipped. Try again.`;
+        }
+    }
+
+    result.innerHTML = message;
 }
 
 function createMathTableWithInput(name, symbol, data, includeAnswerButton) {
