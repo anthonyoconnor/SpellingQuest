@@ -153,10 +153,7 @@ function disableRowInputs(index, quiz) {
 
 function goToNextRow(maxRows, quiz = false) {
     currentInputIndex++;
-    // if the current index is greater than 0
-    // then disable the input in the previous indexed row
-    // remove the check button from the previous indexed row
-    // remove the answer button from the previous indexed row
+
     if (currentInputIndex > 0) {
         disableRowInputs(currentInputIndex - 1, quiz);
     }
@@ -194,7 +191,7 @@ function goToNextRow(maxRows, quiz = false) {
                 const input = document.getElementById(`input-${currentInputIndex}`);
                 const key = input.getAttribute("data-key");
                 input.value = key;
-                input.style.backgroundColor = "yellow";
+                input.style.backgroundColor = "orange";
                 goToNextRow(maxRows, quiz);
                 e.preventDefault();
             });
@@ -357,40 +354,35 @@ function getType() {
     return type;
 }
 
-// switch case based on getType()
 function setup() {
     const type = getType();
+    let data, symbol, title;
     switch (type) {
         case "multiplication":
-            multiplicationData = createMultiplicationData();
-            currentData = multiplicationData;
-            currentSymbol = "x";
-            setTitle("Multiplication");
-            displayInitialView(multiplicationData, currentSymbol);
+            data = createMultiplicationData();
+            symbol = "x";
+            title = "Multiplication";
             break;
         case "subtraction":
-            subtractionData = createSubtractionData();
-            currentData = subtractionData;
-            currentSymbol = "-";
-            setTitle("Subtraction");
-            displayInitialView(subtractionData, currentSymbol);
+            data = createSubtractionData();
+            symbol = "-";
+            title = "Subtraction";
             break;
         case "division":
-            divisionData = createDivisionData();
-            currentData = divisionData;
-            currentSymbol = "/";
-            displayInitialView(divisionData, currentSymbol);
-            setTitle("Division");
+            data = createDivisionData();
+            symbol = "/";
+            title = "Division";
             break;
         default: // default to addition
-            additionData = createAdditionData();
-            currentData = additionData;
-            currentSymbol = "+";
-            displayInitialView(additionData, currentSymbol);
-            setTitle("Addition");
+            data = createAdditionData();
+            symbol = "+";
+            title = "Addition";
             break;
-
     }
+    currentData = data;
+    currentSymbol = symbol;
+    setTitle(title);
+    displayInitialView(data, symbol);
 }
 
 setup();
