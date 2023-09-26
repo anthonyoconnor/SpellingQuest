@@ -14,6 +14,8 @@ const singleTable = document.getElementById("singleTable");
 const showAllButton = document.getElementById("showAll");
 const practiceButton = document.getElementById("practice");
 const quizButton = document.getElementById("quiz");
+const randomQuizButton = document.getElementById("randomQuiz");
+
 // data structure to trrack how many results were correct
 let currentResults = {
     correct: 0,
@@ -32,26 +34,52 @@ function resetCurrentResults() {
     };
 }
 
-showAllButton.addEventListener("click", (e) => {
-    displayInitialView(currentData, currentSymbol);
-    e.preventDefault();
-});
+function setupClickHandlers() {
 
-practiceButton.addEventListener("click", (e) => {
-    loadInputTable(currentData[currentIndex], currentIndex, currentSymbol, false);
-    practiceButton.classList.add("enabled");
-    resetCurrentResults();
-    e.preventDefault();
-});
+    showAllButton.addEventListener("click", (e) => {
+        displayInitialView(currentData, currentSymbol);
+        e.preventDefault();
+    });
 
-quizButton.addEventListener("click", (e) => {
-    const data = shuffleArray(currentData[currentIndex]);
-    loadInputTable(data, currentIndex, currentSymbol, true);
-    quizButton.classList.add("enabled");
-    resetCurrentResults();
-    e.preventDefault();
-});
+    randomQuizButton.addEventListener("click", (e) => {
+        let data = [];
+        const randomNumbers = [];
+        while (randomNumbers.length < 12) {
+            const randomNumber = Math.floor(Math.random() * currentData.length);
+            if (!randomNumbers.includes(randomNumber)) {
+                randomNumbers.push(randomNumber);
+            }
+        }
 
+        for (let i = 0; i < randomNumbers.length; i++) {
+            data.push(currentData[i][randomNumbers[i]]);
+        }
+
+        data = shuffleArray(data);
+
+        displayRandomQuizView();
+        loadInputTable(data, 'Quiz', currentSymbol, true);
+        quizButton.classList.add("enabled");
+        resetCurrentResults();
+        e.preventDefault();
+
+    });
+
+    practiceButton.addEventListener("click", (e) => {
+        loadInputTable(currentData[currentIndex], numberNames[currentIndex + 1], currentSymbol, false);
+        practiceButton.classList.add("enabled");
+        resetCurrentResults();
+        e.preventDefault();
+    });
+
+    quizButton.addEventListener("click", (e) => {
+        const data = shuffleArray(currentData[currentIndex]);
+        loadInputTable(data, numberNames[currentIndex + 1], currentSymbol, true);
+        quizButton.classList.add("enabled");
+        resetCurrentResults();
+        e.preventDefault();
+    });
+}
 
 // ------------------------------------
 // Create Math Tables
@@ -147,9 +175,9 @@ function loadSingleTable(data, name, symbol) {
 
 let currentInputIndex = -1;
 
-function loadInputTable(data, index, symbol, quiz = false) {
+function loadInputTable(data, name, symbol, quiz = false) {
 
-    const table = createMathTableWithInput(numberNames[index + 1], symbol, data, !quiz);
+    const table = createMathTableWithInput(name, symbol, data, !quiz);
     const single = document.getElementById("single-table-container");
     single.innerHTML = "";
     single.appendChild(table);
@@ -403,6 +431,15 @@ function displaySingleView(index, data, symbol) {
     loadSingleTable(data[index], numberNames[index + 1], symbol);
     allTables.classList.add("hide");
     singleTable.classList.remove("hide");
+    practiceButton.classList.remove("hide");
+    quizButton.classList.remove("hide");
+}
+
+function displayRandomQuizView() {
+    allTables.classList.add("hide");
+    singleTable.classList.remove("hide");
+    practiceButton.classList.add("hide");
+    quizButton.classList.add("hide");
 }
 
 function setTitle(text) {
@@ -419,6 +456,10 @@ function getType() {
 
 function setup() {
     const type = getType();
+    if (!type) {
+        return;
+    }
+    setupClickHandlers();
     let data, symbol, title;
     switch (type) {
         case "multiplication":

@@ -119,6 +119,12 @@ tr:nth-child(even) {
 .instructions {
   text-align: center;
   padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.instructions a {
+  margin-left: 20px;
 }
 
 /* Buttons */
@@ -170,6 +176,10 @@ tr:nth-child(even) {
 
 .all {
   background-color: #817e66;
+}
+
+.random {
+  background-color: #c8b100;
 }
 
 .practice {
