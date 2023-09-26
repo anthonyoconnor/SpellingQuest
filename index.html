@@ -171,23 +171,11 @@
 		</div>
 
 	</div>
-	<script>
-		if ('serviceWorker' in navigator) {
-		  navigator.serviceWorker.register('/sw.js')
-			.then(function(reg) {
-			  if (reg.installing) {
-				console.log('SW installing');
-			  } else if (reg.waiting) {
-				console.log('SW waiting');
-			  } else if (reg.active) {
-				console.log('SW activated');
-			  }
-			}).catch(function(error) {
-			  // registration failed
-			  console.log('Registration failed with ' + error);
-			});
-		}
-	  </script>
+	<footer>
+		<p>
+			For inquiries or new word lists please contact me at <a href="mailto:anthonyoconnor@gmail.com?subject=Spelling Quest">anthonyoconnor@gmail.com</a>.
+		</p>
+	</footer>
 </body>
 
 </html>

@@ -15,6 +15,7 @@
   --highlighted-text-color: white;
   --border-color: #d3d6da;
   --active-border-color: black;
+  --header-color: #3498db;
 }
 
 
@@ -23,18 +24,18 @@ header {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: #3498db;
+  background-color: var(--header-color);
   color: white;
-  padding: 20px;
+  padding: 0px 20px;
 }
 
 footer {
   margin-top: 20px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  background-color: #3498db;
+  background-color: var(--header-color);
   color: white;
   padding: 20px;
 }
