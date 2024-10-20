@@ -203,7 +203,7 @@
       ]
     },
     {
-      "title": "Fifth Grade Spelling Word List 1",
+      "title": "Spelling Bee Grade 5 - List 1",
       "words": [
         "allowed",
         "continued",
@@ -218,7 +218,7 @@
       ]
     },
     {
-        "title": "Fifth Grade Spelling Word List 2",
+        "title": "Spelling Bee Grade 5 - List 2",
         "words": [
             "amount",
         "daytime",
@@ -233,7 +233,7 @@
       ]
     },
     {
-        "title": "Fifth Grade Spelling Word List 3",
+        "title": "Spelling Bee Grade 5 - List 3",
         "words": [
           "appointed",
           "decimal",
@@ -248,7 +248,7 @@
       ]
     },
     {
-        "title": "Fifth Grade Spelling Word List 4",
+        "title": "Spelling Bee Grade 5 - List 4",
         "words": [
           "attention",
           "observe",
@@ -263,7 +263,7 @@
       ]
     },
     {
-        "title": "Fifth Grade Spelling Word List 5",
+        "title": "Spelling Bee Grade 5 - List 5",
         "words": [
           "business",
           "orphan",
@@ -278,7 +278,7 @@
       ]
     },
     {
-        "title": "Fifth Grade Spelling Word List 6",
+        "title": "Spelling Bee Grade 5 - List 6",
         "words": [
           "tasty",
           "warn",
@@ -293,7 +293,7 @@
       ]
     },
     {
-        "title": "Fifth Grade Spelling Word List 7",
+        "title": "Spelling Bee Grade 5 - List 7",
         "words": [
           "column",
           "paint",
@@ -310,244 +310,372 @@
       ]
     },
     {
-      "title": "Sixth Grade Spelling Word List 1",
+      "title": "Spelling Bee Grade 6 - List 1",
       "words": [
         "swift",
-        "bitcoin",
-        "congeniality",
-        "biomimicry",
-        "solitude",
         "chew",
-        "musician",
-        "hologram",
-        "polyester",
-        "anoint"
+        "braid",
+        "specific",
+        "semicolon",
+        "defensive",
+        "umbrella",
+        "anteater",
+        "pouring",
+        "experiment",
+        "evacuees",
+        "flicker",
+        "abundant",
+        "bookmobile",
+        "performance",
+        "gelatinous"
       ]
     },
     {
-        "title": "Sixth Grade Spelling Word List 2",
+        "title": "Spelling Bee Grade 6 - List 2",
         "words": [
-          "braid",
+          "bitcoin",
+          "musician",
           "cordial",
-          "medusa",
-          "spatula",
-          "amiably",
-          "specific",
           "malign",
-          "literally",
-          "tuition",
-          "perpetrator"
-      ]
-    },
-    {
-        "title": "Sixth Grade Spelling Word List 3",
-        "words": [
-          "semicolon",
           "eighth",
-          "chimpanzee",
-          "poisonous",
-          "prosthetic",
-          "defensive",
           "handle",
-          "azalea",
-          "aerospace",
-          "partridge"
-      ]
-    },
-    {
-        "title": "Sixth Grade Spelling Word List 4",
-        "words": [
-          "umbrella",
           "innocent",
-          "quantum",
-          "gymnastics",
-          "orchestra",
-          "anteater",
           "monkeys",
-          "bulletin",
-          "horizontal",
-          "embroidery"
-      ]
-    },
-    {
-        "title": "Sixth Grade Spelling Word List 5",
-        "words": [
-          "pouring",
           "malleable",
-          "committee",
-          "boulevard",
-          "ricochet",
-          "experiment",
           "Honolulu",
-          "nausea",
-          "fortune",
-          "claustrophobic"
-      ]
-    },
-    {
-        "title": "Sixth Grade Spelling Word List 6",
-        "words": [
-          "evacuees",
           "patient",
-          "invertebrate",
-          "expectorant",
-          "entrepreneurs",
-          "flicker",
           "neutron",
-          "mathematics",
-          "Tasmanian",
-          "contagious"
-      ]
-    },
-    {
-        "title": "Sixth Grade Spelling Word List 7",
-        "words": [
-          "abundant",
           "silhouette",
-          "especially",
-          "acoustic",
-          "merengue",
-          "bookmobile",
           "pulpit",
-          "persuade",
-          "oracle",
-          "fluorescent",
-          "performance"
+          "incompetent",
+          "intertidal"
       ]
     },
     {
-        "title": "Sixth Grade Spelling Word List 7",
+        "title": "Spelling Bee Grade 6 - List 3",
         "words": [
-          "incompetent",
+          "congeniality",
+          "hologram",
+          "medusa",
+          "literally",
+          "chimpanzee",
+          "azalea",
+          "quantum",
+          "bulletin",
+          "committee",
+          "nausea",
+          "invertebrate",
+          "mathematics",
+          "especially",
+          "persuade",
           "vegetable",
+          "ancient"
+      ]
+    },
+    {
+        "title": "Spelling Bee Grade 6 - List 4",
+        "words": [
+          "biomimicry",
+          "polyester",
+          "spatula",
+          "tuition",
+          "poisonous",
+          "aerospace",
+          "gymnastics",
+          "horizontal",
+          "boulevard",
+          "fortune",
+          "expectorant",
+          "Tasmanian",
+          "acoustic",
+          "oracle",
           "tortoise",
+          "optician"
+      ]
+    },
+    {
+        "title": "Spelling Bee Grade 6 - List 5",
+        "words": [
+          "solitude",
+          "anoint",
+          "amiably",
+          "perpetrator",
+          "prosthetic",
+          "partridge",
+          "orchestra",
+          "embroidery",
+          "ricochet",
+          "claustrophobic",
+          "entrepreneurs",
+          "contagious",
+          "merengue",
+          "fluorescent",
           "orchids",
-          "gelatinous",
-          "intertidal",
-          "ancient",
-          "optician",
           "composure"
       ]
-    },    
+    },
     {
-      "title": "Seventh Grade Spelling Word List 1",
+      "title": "Spelling Bee Grade 7 - List 1",
       "words": [
         "atoll",
-        "amputation",
-        "sphinx",
-        "proviso",
-        "calamine",
         "paralysis",
-        "vociferous",
-        "marmalade",
-        "premonition",
-        "commendable"
+        "reservoir",
+        "monomania",
+        "incarcerated",
+        "callous",
+        "chimpanzee",
+        "truculently",
+        "taxidermy",
+        "appendectomy",
+        "grandiose",
+        "peroxide",
+        "generalissimo",
+        "piteously",
+        "subterranean",
+        "dexterit"
       ]
     },
     {
-        "title": "Seventh Grade Spelling Word List 2",
+        "title": "Spelling Bee Grade 7 - List 2",
         "words": [
-          "reservoir",
+          "amputation",
+          "vociferous",
           "strenuous",
-          "boisterously",
-          "Seminole",
-          "brigands",
-          "monomania",
           "financiers",
-          "entrepreneurs",
-          "jauntily",
-          "parenthetical"
-      ]
-    },
-    {
-        "title": "Seventh Grade Spelling Word List 3",
-        "words": [
-          "incarcerated",
           "barrette",
-          "voluminous",
-          "impeccable",
-          "excruciating",
-          "callous",
           "conspiracy",
-          "orchids",
-          "dragoons",
-          "exasperation"
-      ]
-    },
-    {
-        "title": "Seventh Grade Spelling Word List 4",
-        "words": [
-          "chimpanzee",
           "merengue",
-          "linoleum",
-          "memorandum",
-          "incessant",
-          "truculently",
           "intimation",
-          "monsieur",
-          "hallucinations",
-          "mandible"
-      ]
-    },
-    {
-        "title": "Seventh Grade Spelling Word List 5",
-        "words": [
-          "taxidermy",
           "treacherous",
-          "propaganda",
-          "contagious",
-          "crematoria",
-          "appendectomy",
           "cordial",
-          "celerity",
-          "gargoyle",
-          "lichenous"
-      ]
-    },
-    {
-        "title": "Seventh Grade Spelling Word List 6",
-        "words": [
-          "grandiose",
           "sinewy",
-          "despondency",
-          "pastrami",
-          "sophomore",
-          "peroxide",
           "claustrophobic",
-          "tapirs",
-          "quantum",
-          "ricochet"
-      ]
-    },
-    {
-        "title": "Seventh Grade Spelling Word List 7",
-        "words": [
-          "generalissimo",
           "conundrum",
-          "conspicuous",
-          "stevedores",
-          "crampon",
-          "piteously",
           "alacrity",
-          "acacias",
-          "anecdote",
-          "massacres"
+          "flabbergasted",
+          "atrocity"
       ]
     },
     {
-        "title": "Seventh Grade Spelling Word List 8",
+        "title": "Spelling Bee Grade 7 - List 3",
         "words": [
-          "subterranean",
-          "flabbergasted",
+          "sphinx",
+          "marmalade",
+          "boisterously",
+          "entrepreneurs",
+          "voluminous",
+          "orchids",
+          "linoleum",
+          "monsieur",
+          "propaganda",
+          "celerity",
+          "despondency",
+          "tapirs",
+          "conspicuous",
+          "acacias",
           "composure",
+          "repugnance"
+      ]
+    },
+    {
+        "title": "Spelling Bee Grade 7 - List 4",
+        "words": [
+          "proviso",
+          "premonition",
+          "Seminole",
+          "jauntily",
+          "impeccable",
+          "dragoons",
+          "memorandum",
+          "hallucinations",
+          "contagious",
+          "gargoyle",
+          "pastrami",
+          "quantum",
+          "stevedores",
+          "anecdote",
           "germinate",
+          "labyrinthine"
+      ]
+    },
+    {
+        "title": "Spelling Bee Grade 7 - List 5",
+        "words": [
+          "calamine",
+          "commendable",
+          "brigands",
+          "parenthetical",
+          "excruciating",
+          "exasperation",
+          "incessant",
+          "mandible",
+          "crematoria",
+          "lichenous",
+          "sophomore",
+          "ricochet",
+          "crampon",
+          "massacres",
           "chandeliers",
-          "dexterity",
-          "atrocity",
-          "repugnance",
-          "labyrinthine",
           "reprobate"
       ]
-    }    
+    },
+    {
+      "title": "Spelling Bee Grade 8 - List 1",
+      "words": [
+        "abbreviate",
+        "corporal",
+        "effect",
+        "legitimate",
+        "precocious",
+        "absorbent",
+        "council",
+        "encouragement",
+        "leisure",
+        "raze",
+        "accept",
+        "caricature",
+        "epic",
+        "loquacious",
+        "reconcile",
+        "access",
+        "counsel",
+        "equilibrium",
+        "lieutenant",
+        "relieve"         
+    ]
+    },
+    {
+      "title": "Spelling Bee Grade 8 - List 2",
+      "words": [
+        "acoustics",
+        "council",
+        "erroneous",
+        "malady",
+        "relevant",
+        "accumulate",
+        "critique",
+        "epitome",
+        "malicious",
+        "repulse",
+        "acknowledgment",
+        "customary",
+        "excessive",
+        "memorization",
+        "rhyme",
+        "adversary",
+        "deceive",
+        "extricate",
+        "mesmerize",
+        "rhythm"  
+      ]
+    },
+    {
+      "title": "Spelling Bee Grade 8 - List 3",
+      "words": [
+        "affects",
+        "decipher",
+        "familiar",
+        "mischievous",
+        "scarcely",
+        "allotment",
+        "defendant",
+        "grotesque",
+        "negligence",
+        "schedule",
+        "ancestor",
+        "deficient",
+        "haphazard",
+        "noticeable",
+        "sincerely",
+        "anonymous",
+        "deficit",
+        "hazardous",
+        "notoriety",
+        "tragedy"      
+      ]
+    },
+    {
+      "title": "Spelling Bee Grade 8 - List 4",
+      "words": [
+        "antique",
+        "desolate",
+        "idiosyncrasy",
+        "nuisance",
+        "transient",
+        "arrangement",
+        "deterrent",
+        "incomprehensible",
+        "obstinate",
+        "tyranny",
+        "awkward",
+        "diminish",
+        "inconsolable",
+        "occurrence",
+        "unacceptable",
+        "belligerent",
+        "disappeared",
+        "indelible",
+        "ominous",
+        "ubiquitous"        
+      ]
+    },
+    {
+      "title": "Spelling Bee Grade 8 - List 5",
+      "words": [
+        "benefited",
+        "disapproval",
+        "insistent",
+        "optimistic",
+        "vengeance",
+        "benovolent",
+        "discernible",
+        "inspiration",
+        "pageant",
+        "vivacious",
+        "brilliance",
+        "discrepancy",
+        "irresistible",
+        "perseverance",
+        "voracious",
+        "capricious",
+        "domestic",
+        "irrevocable",
+        "preceding",
+        "vulnerable"        
+      ]
+    },
+    {
+      "title": "Vocab Grade 8 - October",
+      "words": [
+        "Extrovert",
+        "Monetary",
+        "Unique",
+        "Makeshift",
+        "Seething",
+        "Ambivert",
+        "Unique",
+        "Ancestry",
+        "Bribery",
+        "Teeter totter",
+        "Introvert",
+        "Harpoon",
+        "Smolder",
+        "Smoldering",
+        "Pretentious",
+        "Sleuth",
+        "Obsolete",
+        "Scrimmage",
+        "Humiliated",
+        "Phobia",
+        "Ventriloquist",
+        "Radar",
+        "Ceremonial",
+        "Escapism", 
+        "Dignity", 
+        "Dignified", 
+        "Juvenile", 
+        "Hierarchical"       
+      ]
+    }   
   ]
 }
